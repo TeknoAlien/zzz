@@ -1,0 +1,3036 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <title>InfoSec</title>
+    
+    
+    <meta property="og:type" content="website">
+    <meta property="og:title" content="CYBERSECURITY 101">
+    <meta property="og:description" content="oops...wrong day to skip the tinfoil hat">
+    <meta property="og:url" content="https://teknoalien.github.io/zzz/">
+    
+    
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="CYBERSECURITY 101">
+    <meta name="twitter:description" content="oops...wrong day to skip the tinfoil hat">
+    
+    
+    <meta name="description" content="Cybersecurity guide">
+    <meta name="keywords" content="cybersecurity, internet safety, digital privacy, VPN, encryption, phishing, malware, security guide">
+    <meta name="author" content="Unknown">
+    <meta name="theme-color" content="#ffffff">
+    
+    <link rel="icon" type="image/png" sizes="32x32" href="logo.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="logo.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="logo.png">
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Share+Tech+Mono&family=Rajdhani:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+            -webkit-user-select: none;
+            -moz-user-select: none;
+            -ms-user-select: none;
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 20px;
+        }
+
+        
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #050505;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.2);
+            border-radius: 0;
+            transition: all 0.3s ease;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255,255,255,0.35);
+        }
+
+        
+        * {
+            scrollbar-width: thin;
+            scrollbar-color: #ffffff #0a0a0a;
+        }
+
+        /* ── Music toggle ── */
+        #music-toggle {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 44px;
+            height: 44px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 9998;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        #music-toggle.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #music-toggle:hover {
+            transform: translateY(-3px);
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        .music-icon {
+            display: flex;
+            align-items: flex-end;
+            gap: 2.5px;
+            height: 16px;
+        }
+
+        .music-icon span {
+            display: block;
+            width: 2.5px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 1px;
+            height: 3px;
+            transition: all 0.3s ease;
+        }
+
+        #music-toggle.playing .music-icon span {
+            background: rgba(255,255,255,0.7);
+        }
+
+        #music-toggle.playing .music-icon span:nth-child(1) { animation: bar1 1.1s ease-in-out infinite; }
+        #music-toggle.playing .music-icon span:nth-child(2) { animation: bar2 0.9s ease-in-out infinite; }
+        #music-toggle.playing .music-icon span:nth-child(3) { animation: bar3 1.3s ease-in-out infinite; }
+        #music-toggle.playing .music-icon span:nth-child(4) { animation: bar4 1.0s ease-in-out infinite; }
+        #music-toggle.playing .music-icon span:nth-child(5) { animation: bar5 1.2s ease-in-out infinite; }
+
+        @keyframes bar1 { 0%,100% { height: 4px; } 30% { height: 14px; } 60% { height: 6px; } 80% { height: 10px; } }
+        @keyframes bar2 { 0%,100% { height: 6px; } 25% { height: 16px; } 50% { height: 5px; } 75% { height: 12px; } }
+        @keyframes bar3 { 0%,100% { height: 8px; } 20% { height: 4px; } 45% { height: 14px; } 70% { height: 6px; } }
+        @keyframes bar4 { 0%,100% { height: 5px; } 35% { height: 12px; } 55% { height: 4px; } 85% { height: 15px; } }
+        @keyframes bar5 { 0%,100% { height: 7px; } 40% { height: 13px; } 65% { height: 5px; } 90% { height: 10px; } }
+
+        @media (max-width: 768px) {
+            #music-toggle {
+                width: 40px;
+                height: 40px;
+                bottom: 20px;
+                right: 20px;
+            }
+        }
+
+        /* ── Floating TOC sidebar ── */
+        #toc-toggle {
+            position: fixed;
+            top: 50%;
+            left: 0;
+            transform: translateY(-50%);
+            width: 32px;
+            height: 56px;
+            background: rgba(10,10,10,0.9);
+            border: 1px solid rgba(255,255,255,0.15);
+            border-left: none;
+            border-radius: 0 4px 4px 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            backdrop-filter: blur(6px);
+            -webkit-backdrop-filter: blur(6px);
+        }
+
+        #toc-toggle.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #toc-toggle:hover {
+            background: rgba(20,20,20,0.95);
+            border-color: rgba(255,255,255,0.3);
+            width: 36px;
+        }
+
+        #toc-toggle-icon {
+            display: flex;
+            flex-direction: column;
+            gap: 3px;
+            width: 14px;
+        }
+
+        #toc-toggle-icon span {
+            display: block;
+            height: 1.5px;
+            background: rgba(255,255,255,0.5);
+            border-radius: 1px;
+        }
+
+        #toc-toggle-icon span:nth-child(2) {
+            width: 70%;
+        }
+
+        #toc-sidebar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 260px;
+            height: 100vh;
+            background: rgba(8,8,8,0.97);
+            border-right: 1px solid rgba(255,255,255,0.1);
+            z-index: 10000;
+            transform: translateX(-100%);
+            transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+            display: flex;
+            flex-direction: column;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+
+        #toc-sidebar.open {
+            transform: translateX(0);
+        }
+
+        .toc-header {
+            padding: 24px 20px 16px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.7em;
+            letter-spacing: 4px;
+            color: rgba(255,255,255,0.6);
+            text-transform: uppercase;
+            flex-shrink: 0;
+        }
+
+        .toc-list {
+            flex: 1;
+            overflow-y: auto;
+            padding: 12px 0;
+            scrollbar-width: thin;
+            scrollbar-color: rgba(255,255,255,0.1) transparent;
+        }
+
+        .toc-list::-webkit-scrollbar {
+            width: 4px;
+        }
+        .toc-list::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        .toc-list::-webkit-scrollbar-thumb {
+            background: rgba(255,255,255,0.1);
+        }
+
+        .toc-group-label {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.6em;
+            letter-spacing: 3px;
+            color: rgba(255,255,255,0.5);
+            padding: 14px 20px 6px;
+            text-transform: uppercase;
+        }
+
+        .toc-group-label.toc-adv-label {
+            color: rgba(180,50,60,0.7);
+        }
+
+        .toc-link {
+            display: block;
+            padding: 7px 20px 7px 28px;
+            font-family: 'Rajdhani', sans-serif;
+            font-size: 0.88em;
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            transition: all 0.2s ease;
+            border-left: 2px solid transparent;
+            cursor: pointer;
+            letter-spacing: 0.5px;
+        }
+
+        .toc-link:hover {
+            color: rgba(255,255,255,0.9);
+            background: rgba(255,255,255,0.04);
+            border-left-color: rgba(255,255,255,0.3);
+        }
+
+        .toc-link.active {
+            color: #ffffff;
+            border-left-color: rgba(255,255,255,0.7);
+            background: rgba(255,255,255,0.05);
+        }
+
+        .toc-link.toc-adv-link.active {
+            border-left-color: rgba(180,50,60,0.7);
+        }
+
+        /* Parent links with expand arrow */
+        .toc-parent {
+            position: relative;
+            padding-right: 32px;
+        }
+
+        .toc-parent::after {
+            content: "";
+            position: absolute;
+            right: 16px;
+            top: 50%;
+            width: 5px;
+            height: 5px;
+            border-right: 1.5px solid rgba(255,255,255,0.45);
+            border-bottom: 1.5px solid rgba(255,255,255,0.45);
+            transform: translateY(-50%) rotate(-45deg);
+            transition: transform 0.2s ease;
+        }
+
+        .toc-section.expanded .toc-parent::after {
+            transform: translateY(-50%) rotate(45deg);
+        }
+
+        /* Collapsible children */
+        .toc-children {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .toc-section.expanded .toc-children {
+            max-height: 500px;
+        }
+
+        .toc-child {
+            padding: 5px 20px 5px 40px;
+            font-size: 0.8em;
+            color: rgba(255,255,255,0.5);
+            border-left: 2px solid transparent;
+        }
+
+        .toc-child:hover {
+            color: rgba(255,255,255,0.8);
+        }
+
+        .toc-child.active {
+            color: rgba(255,255,255,0.9);
+            border-left-color: rgba(255,255,255,0.5);
+        }
+
+        .toc-child.toc-adv-link.active {
+            border-left-color: rgba(180,50,60,0.6);
+        }
+
+        .toc-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.5);
+            z-index: 9999;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .toc-overlay.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        @media (max-width: 768px) {
+            #toc-toggle {
+                top: auto;
+                bottom: 80px;
+                width: 38px;
+                height: 38px;
+                border-radius: 0 6px 6px 0;
+            }
+            #toc-sidebar {
+                width: 240px;
+            }
+        }
+
+        
+        #scroll-to-top {
+            position: fixed;
+            bottom: 30px;
+            right: 84px;
+            width: 44px;
+            height: 44px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.25);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            z-index: 9998;
+            box-shadow: none;
+            will-change: transform, opacity;
+            backdrop-filter: blur(4px);
+            -webkit-backdrop-filter: blur(4px);
+        }
+
+        #scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        #scroll-to-top:hover {
+            transform: translateY(-3px);
+            background: rgba(255,255,255,0.1);
+            border-color: rgba(255,255,255,0.5);
+        }
+
+        #scroll-to-top::before {
+            content: "";
+            width: 8px;
+            height: 8px;
+            border-top: 2px solid rgba(255,255,255,0.7);
+            border-left: 2px solid rgba(255,255,255,0.7);
+            transform: rotate(45deg) translateY(2px);
+        }
+
+        
+        #emergency-access {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-radius: 0;
+            padding: 22px 50px;
+            margin: 35px auto;
+            max-width: 640px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: none;
+            animation: emergencyPulse 3s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        #emergency-access::before {
+            content: "";
+            position: absolute;
+            top: 0; left: -100%;
+            width: 100%; height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.04), transparent);
+            animation: emergencySweep 4s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        #emergency-access::after {
+            content: "";
+            position: absolute;
+            inset: 3px;
+            border: 1px solid rgba(255,255,255,0.06);
+            border-radius: 1px;
+            pointer-events: none;
+        }
+
+        @keyframes emergencySweep {
+            0%   { left: -100%; }
+            100% { left: 200%; }
+        }
+
+        @keyframes emergencyPulse {
+            0%, 100% {
+                border-color: rgba(255,255,255,0.2);
+                box-shadow: 0 0 18px rgba(255,255,255,0.06), 0 0 50px rgba(255,255,255,0.02);
+            }
+            50% {
+                border-color: rgba(255,255,255,0.5);
+                box-shadow: 0 0 30px rgba(255,255,255,0.18), 0 0 80px rgba(255,255,255,0.07), inset 0 0 20px rgba(255,255,255,0.03);
+            }
+        }
+
+        #emergency-access:hover {
+            transform: scale(1.015);
+            background: rgba(255,255,255,0.04);
+            border-color: rgba(255,255,255,0.6);
+            box-shadow: 0 0 30px rgba(255,255,255,0.1);
+        }
+
+        #emergency-access h3 {
+            color: #ffffff;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1em;
+            margin: 0;
+            letter-spacing: 4px;
+            text-shadow: 0 0 10px rgba(255,255,255,0.8), 0 0 30px rgba(255,255,255,0.3);
+        }
+
+        #emergency-access p {
+            color: rgba(255,255,255,0.35);
+            margin: 7px 0 0 0;
+            font-size: 0.78em;
+            letter-spacing: 2px;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        @media (max-width: 768px) {
+            #scroll-to-top {
+                width: 40px;
+                height: 40px;
+                bottom: 20px;
+                right: 70px;
+            }
+
+            #emergency-access {
+                padding: 12px 20px;
+                margin: 15px 20px;
+            }
+
+            #emergency-access h3 {
+                font-size: 1.1em;
+            }
+
+            #emergency-access p {
+                font-size: 0.85em;
+            }
+        }
+
+        body {
+            font-family: 'Rajdhani', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #000000;
+            padding: 20px;
+            line-height: 1.7;
+            position: relative;
+            overflow-x: hidden;
+            font-weight: 400;
+            font-size: 16px;
+            letter-spacing: 0.3px;
+        }
+
+        
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 3px,
+                rgba(255,255,255,0.012) 3px,
+                rgba(255,255,255,0.012) 4px
+            );
+            pointer-events: none;
+            z-index: 2;
+            animation: scanPulse 8s ease-in-out infinite;
+        }
+
+        @keyframes scanPulse {
+            0%, 100% { opacity: 0.6; }
+            50%       { opacity: 1; }
+        }
+
+        
+        #bg-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 0;
+            will-change: transform;
+            image-rendering: pixelated;
+            display: none;
+        }
+
+        .vignette-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            background: radial-gradient(ellipse at center,
+                transparent 40%,
+                rgba(0,0,0,0.2) 70%,
+                rgba(0,0,0,0.5) 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #0a0a0a;
+            border-radius: 0;
+            box-shadow: 0 0 1px rgba(255,255,255,0.2);
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.1);
+            position: relative;
+            z-index: 1;
+        }
+
+        .container::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: 
+                linear-gradient(90deg, rgba(255,255,255,0.015) 1px, transparent 1px),
+                linear-gradient(rgba(255,255,255,0.015) 1px, transparent 1px);
+            background-size: 60px 60px;
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.4;
+        }
+
+        header {
+            background: #000000;
+            color: #ffffff;
+            padding: 80px 40px 60px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            box-shadow:
+                inset 0 -1px 0 rgba(255,255,255,0.06);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 16px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        header::after {
+            content: "";
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 200px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.6), transparent);
+        }
+
+        
+        header::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 3px,
+                rgba(255,255,255,0.012) 3px,
+                rgba(255,255,255,0.012) 4px
+            );
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        @keyframes bracketPulse {
+            0%, 100% { opacity: 0.5; }
+            50%       { opacity: 0.9; }
+        }
+
+        header img {
+            width: 140px;
+            height: auto;
+            filter: drop-shadow(0 0 20px rgba(255,255,255,0.8)) drop-shadow(0 0 40px rgba(255,255,255,0.4));
+            margin: 0;
+            position: relative;
+            z-index: 2;
+            animation: logoGlow 6s ease-in-out infinite;
+        }
+
+        @keyframes logoGlow {
+            0%, 100% { filter: drop-shadow(0 0 15px rgba(255,255,255,0.5)) drop-shadow(0 0 30px rgba(255,255,255,0.3)); }
+            50%       { filter: drop-shadow(0 0 25px rgba(255,255,255,0.8)) drop-shadow(0 0 50px rgba(255,255,255,0.4)); }
+        }
+
+        header h1 {
+            font-size: 3.2em;
+            margin: 0;
+            font-weight: 900;
+            letter-spacing: 12px;
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+            z-index: 2;
+            text-transform: uppercase;
+            color: #ffffff;
+            text-shadow:
+                0 0 8px rgba(255,255,255,0.85),
+                0 0 22px rgba(255,255,255,0.4),
+                0 0 50px rgba(255,255,255,0.15),
+                0 2px 4px rgba(0,0,0,0.9);
+            animation: titleGlow 4s ease-in-out infinite;
+        }
+
+        @keyframes titleGlow {
+            0%, 100% {
+                text-shadow:
+                    0 0 8px rgba(255,255,255,0.8),
+                    0 0 22px rgba(255,255,255,0.3),
+                    0 0 50px rgba(255,255,255,0.1);
+            }
+            50% {
+                text-shadow:
+                    0 0 10px rgba(255,255,255,0.95),
+                    0 0 30px rgba(255,255,255,0.5),
+                    0 0 65px rgba(255,255,255,0.2),
+                    0 0 100px rgba(255,255,255,0.07);
+            }
+        }
+
+        header h1 .typing-text {
+            display: inline-block;
+            border-right: 3px solid #ffffff;
+            padding-right: 5px;
+            animation: blink 0.7s step-end 4.2s;
+        }
+
+        @keyframes blink {
+            50% { border-color: transparent; }
+        }
+
+        header p {
+            font-size: 0.82em;
+            opacity: 0.5;
+            color: #cccccc;
+            text-shadow: 0 0 10px rgba(255,255,255,0.3);
+            margin: 0;
+            position: relative;
+            z-index: 2;
+            letter-spacing: 6px;
+            font-weight: 400;
+            text-transform: uppercase;
+            font-family: 'Share Tech Mono', 'Courier New', monospace;
+        }
+
+        header p::before { content: "[ "; color: rgba(255,255,255,0.5); }
+        header p::after  { content: " ]"; color: rgba(255,255,255,0.5); }
+
+        .content {
+            padding: 40px;
+        }
+
+        .level-divider {
+            position: relative;
+            margin: 50px -40px 40px;
+            padding: 28px 40px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .level-divider::before {
+            content: "";
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+        }
+
+        .level-divider::after {
+            content: "";
+            position: absolute;
+            bottom: 0; left: 0; right: 0;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+        }
+
+        .basic-divider {
+            background: rgba(255,255,255,0.015);
+        }
+
+        /* Scan-line transition between BASIC and ADVANCED */
+        .level-transition {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 10px 0;
+            padding: 0 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .level-transition-line {
+            flex: 1;
+            height: 1px;
+            position: relative;
+        }
+
+        .level-transition-line:first-child {
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15));
+        }
+
+        .level-transition-line:last-child {
+            background: linear-gradient(90deg, rgba(255,255,255,0.15), transparent);
+        }
+
+        .level-transition-label {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.65em;
+            color: rgba(255,255,255,0.15);
+            letter-spacing: 3px;
+            white-space: nowrap;
+            flex-shrink: 0;
+        }
+
+        .advanced-divider {
+            background: rgba(160,30,40,0.03);
+        }
+
+        .level-label {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 6px;
+            margin-bottom: 8px;
+        }
+
+        .basic-label {
+            font-size: 1em;
+            color: rgba(255,255,255,0.6);
+            text-shadow: none;
+        }
+
+        .advanced-label {
+            font-size: 1em;
+            color: rgba(255,255,255,0.85);
+            text-shadow: 0 0 15px rgba(160,30,40,0.4);
+        }
+
+        .advanced-divider .level-bracket {
+            color: rgba(180,50,60,0.5);
+            text-shadow: 0 0 10px rgba(160,30,40,0.3);
+        }
+
+        .advanced-divider .level-desc {
+            color: rgba(255,255,255,0.3);
+        }
+
+        .advanced-divider::before {
+            background: linear-gradient(90deg, transparent, rgba(180,40,50,0.35) 30%, rgba(255,255,255,0.15) 50%, rgba(180,40,50,0.35) 70%, transparent);
+        }
+
+        .advanced-divider::after {
+            background: linear-gradient(90deg, transparent, rgba(180,40,50,0.35) 30%, rgba(255,255,255,0.15) 50%, rgba(180,40,50,0.35) 70%, transparent);
+        }
+
+        .level-transition-line:first-child {
+            background: linear-gradient(90deg, transparent, rgba(180,40,50,0.3));
+        }
+
+        .level-transition-line:last-child {
+            background: linear-gradient(90deg, rgba(180,40,50,0.3), transparent);
+        }
+
+        .level-transition-label {
+            color: rgba(255,255,255,0.15);
+        }
+
+        /* Collapsible advanced section */
+        .advanced-collapsed {
+            max-height: 0;
+            overflow: hidden;
+            opacity: 0;
+            transition: max-height 0.8s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.5s ease 0.1s;
+        }
+
+        .advanced-expanded {
+            max-height: 20000px;
+            overflow: visible;
+            opacity: 1;
+            transition: max-height 1s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s ease;
+        }
+
+        .advanced-expand-hint {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.62em;
+            letter-spacing: 4px;
+            color: rgba(180,50,60,0.4);
+            margin-top: 10px;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+        }
+
+        #advanced-toggle {
+            transition: all 0.3s ease;
+        }
+
+        #advanced-toggle:hover {
+            background: rgba(160,30,40,0.05);
+        }
+
+        #advanced-toggle:hover .advanced-expand-hint {
+            color: rgba(180,50,60,0.7);
+            text-shadow: 0 0 10px rgba(160,30,40,0.2);
+        }
+
+        #advanced-toggle.opened .advanced-expand-hint {
+            opacity: 0;
+            max-height: 0;
+            margin: 0;
+            overflow: hidden;
+            transition: all 0.3s ease;
+        }
+
+        .level-bracket {
+            color: rgba(255,255,255,0.2);
+            font-size: 1.2em;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .level-desc {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.72em;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-top: 4px;
+        }
+
+        .basic-divider .level-desc {
+            color: rgba(255,255,255,0.2);
+        }
+
+        .advanced-divider .level-desc {
+            color: rgba(255,255,255,0.3);
+        }
+
+        .section-title {
+            font-size: 1.6em;
+            color: #ffffff;
+            margin-bottom: 25px;
+            padding: 12px 20px;
+            border-bottom: none;
+            border-left: 3px solid #ffffff;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+            font-weight: 700;
+            font-family: 'Orbitron', sans-serif;
+            position: relative;
+            background: linear-gradient(90deg, rgba(255,255,255,0.04) 0%, transparent 70%);
+            letter-spacing: 3px;
+        }
+
+        .section-title::after {
+            content: none;
+        }
+
+        .subsection {
+            margin-bottom: 25px;
+            background: rgba(255,255,255,0.02);
+            padding: 24px 24px 24px 28px;
+            border-radius: 0;
+            border-left: 2px solid rgba(255,255,255,0.2);
+            border-top: 1px solid rgba(255,255,255,0.04);
+            box-shadow: none;
+            position: relative;
+        }
+
+        .subsection:hover {
+            background: rgba(255,255,255,0.03);
+            border-left-color: rgba(255,255,255,0.5);
+        }
+
+        .subsection h3 {
+            color: #cccccc;
+            font-size: 1.15em;
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            text-shadow: none;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+        }
+
+        .subsection h3::before {
+            content: ">";
+            margin-right: 12px;
+            font-size: 0.9em;
+            color: rgba(255,255,255,0.4);
+            font-weight: bold;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .subsection ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .subsection li {
+            padding: 10px 0 10px 28px;
+            position: relative;
+            color: #b0b0b0;
+            font-size: 1.02em;
+            border-bottom: 1px solid rgba(255,255,255,0.03);
+            transition: all 0.2s ease;
+        }
+
+        .subsection li:last-child {
+            border-bottom: none;
+        }
+
+        .subsection li::before {
+            content: "";
+            position: absolute;
+            left: 8px;
+            top: 18px;
+            width: 6px;
+            height: 6px;
+            border: 1px solid rgba(255,255,255,0.3);
+            transform: rotate(45deg);
+            transition: all 0.2s ease;
+        }
+
+        .subsection li:hover {
+            color: #d0d0d0;
+            background: rgba(255,255,255,0.015);
+        }
+
+        .subsection li:hover::before {
+            background: rgba(255,255,255,0.5);
+            border-color: rgba(255,255,255,0.6);
+            box-shadow: 0 0 6px rgba(255,255,255,0.3);
+        }
+
+        .attack-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .attack-card {
+            background: rgba(255,255,255,0.02);
+            border: 1px solid rgba(255,255,255,0.08);
+            border-radius: 0;
+            padding: 24px;
+            box-shadow: none;
+            display: flex;
+            flex-direction: column;
+            min-height: 120px;
+            will-change: transform;
+            position: relative;
+            border-left: 2px solid rgba(255,255,255,0.15);
+        }
+
+        .attack-card::after {
+            content: "";
+            position: absolute;
+            bottom: 0; left: 0;
+            width: 100%; height: 1px;
+            background: linear-gradient(90deg, rgba(255,255,255,0.2), transparent);
+            transform: scaleX(0);
+            transform-origin: left;
+            transition: transform 0.4s ease;
+        }
+
+        .attack-card h4 {
+            margin-bottom: 10px;
+            line-height: 1.4;
+        }
+
+        .attack-card p {
+            color: #a0a0a0;
+            font-size: 0.95em;
+            flex: 1;
+            line-height: 1.5;
+        }
+
+        .attack-card:hover {
+            transform: translateY(-3px);
+            border-color: rgba(255,255,255,0.2);
+            border-left-color: rgba(255,255,255,0.5);
+            background: rgba(255,255,255,0.04);
+        }
+
+        .attack-card:hover::after {
+            transform: scaleX(1);
+        }
+
+        .attack-card h4 {
+            color: #e0e0e0;
+            font-size: 1.1em;
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            text-shadow: none;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+        }
+
+        .attack-card h4::before {
+            content: "[!]";
+            margin-right: 10px;
+            color: rgba(255,255,255,0.4);
+            font-weight: bold;
+            font-size: 0.8em;
+            font-family: 'Share Tech Mono', monospace;
+            flex-shrink: 0;
+        }
+
+        .trends-section {
+            background: rgba(255,255,255,0.02);
+            padding: 28px;
+            border-radius: 0;
+            margin-top: 24px;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-left: 2px solid rgba(255,255,255,0.25);
+            box-shadow: none;
+            position: relative;
+        }
+
+        .trends-section::before {
+            content: "// THREAT_INTEL";
+            position: absolute;
+            top: -9px;
+            left: 20px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.7em;
+            color: rgba(255,255,255,0.2);
+            letter-spacing: 2px;
+            background: #0a0a0a;
+            padding: 0 8px;
+        }
+
+        .trends-section h4 {
+            color: #cccccc;
+            font-size: 1.2em;
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            text-shadow: none;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 2px;
+        }
+
+        .trends-section h4::before {
+            content: "[!]";
+            margin-right: 12px;
+            font-size: 0.85em;
+            color: rgba(255,255,255,0.4);
+            font-weight: bold;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .trends-section ul {
+            list-style: none;
+        }
+
+        .trends-section li {
+            background: transparent;
+            padding: 14px 16px 14px 32px;
+            margin-bottom: 8px;
+            border-radius: 0;
+            box-shadow: none;
+            border-left: 2px solid rgba(255,255,255,0.2);
+            border-bottom: 1px solid rgba(255,255,255,0.04);
+            color: #a0a0a0;
+            position: relative;
+            transition: all 0.2s ease;
+        }
+
+        .trends-section li:last-child {
+            border-bottom: none;
+        }
+
+        .trends-section li::before {
+            content: "";
+            position: absolute;
+            left: 12px;
+            top: 20px;
+            width: 5px;
+            height: 5px;
+            border: 1px solid rgba(255,255,255,0.25);
+            transform: rotate(45deg);
+        }
+
+        .trends-section li:hover {
+            background: rgba(255,255,255,0.02);
+            border-left-color: rgba(255,255,255,0.5);
+        }
+
+        .trends-section li:hover::before {
+            background: rgba(255,255,255,0.5);
+        }
+
+        .trends-section li strong {
+            color: #d0d0d0;
+            text-shadow: none;
+            font-family: 'Rajdhani', sans-serif;
+            font-weight: 600;
+        }
+
+        footer {
+            background: #050505;
+            color: #808080;
+            text-align: center;
+            padding: 50px 30px;
+            font-size: 0.9em;
+            border-top: 1px solid rgba(255,255,255,0.15);
+            box-shadow: none;
+            position: relative;
+        }
+
+        footer::before {
+            content: "-----[ END TRANSMISSION ]-----";
+            display: block;
+            color: rgba(255,255,255,0.2);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.75em;
+            letter-spacing: 4px;
+            margin-bottom: 25px;
+        }
+
+        footer::after {
+            content: "";
+            display: block;
+            width: 100px;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+            margin: 25px auto 0;
+        }
+
+        footer p {
+            margin: 15px 0;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        footer p:first-of-type {
+            color: #ffffff;
+            font-size: 1.1em;
+            text-shadow: 0 0 10px rgba(255,255,255,0.5);
+        }
+
+        .footer-signature {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            font-size: 0.85em;
+            color: #666;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .footer-signature span {
+            color: #ffffff;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .content {
+                padding: 20px;
+            }
+
+            .attack-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            z-index: 10000;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            padding: 80px 40px;
+            box-sizing: border-box;
+            transition: opacity 0.7s ease, transform 0.7s ease;
+        }
+
+        #loading-screen.fade-out {
+            opacity: 0;
+            transform: scale(1.05);
+            pointer-events: none;
+        }
+
+        #login-form {
+            opacity: 0;
+            transform: translateY(10px);
+            transition: opacity 0.6s ease, transform 0.6s ease;
+            pointer-events: none;
+            margin-top: 28px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            font-family: 'Share Tech Mono', 'Courier New', monospace;
+            width: 100%;
+        }
+
+        #login-form.visible {
+            opacity: 1;
+            transform: translateY(0);
+            pointer-events: all;
+        }
+
+        .login-row {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            width: 320px;
+        }
+
+        .login-label {
+            color: rgba(255,255,255,0.6);
+            font-size: 11px;
+            letter-spacing: 2px;
+            font-weight: normal;
+            text-shadow: none;
+            width: 90px;
+            text-align: right;
+            flex-shrink: 0;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .login-input {
+            background: #000000;
+            border: 1px solid rgba(255,255,255,0.4);
+            color: #ffffff;
+            font-family: 'Share Tech Mono', 'Courier New', monospace;
+            font-size: 12px;
+            padding: 8px 12px;
+            letter-spacing: 2px;
+            outline: none;
+            width: 200px;
+            box-shadow: none;
+            transition: box-shadow 0.3s ease, border-color 0.3s ease;
+            caret-color: #ffffff;
+            border-radius: 0;
+        }
+
+        .login-input::placeholder {
+            color: rgba(255,255,255,0.9);
+            letter-spacing: 2px;
+        }
+
+        .login-input:focus {
+            border-color: rgba(255,255,255,0.7);
+            box-shadow: 0 0 10px rgba(255,255,255,0.15);
+        }
+
+        #login-btn {
+            margin-top: 6px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #ffffff;
+            font-family: 'Share Tech Mono', 'Courier New', monospace;
+            font-size: 12px;
+            letter-spacing: 3px;
+            padding: 10px 36px;
+            cursor: pointer;
+            box-shadow: none;
+            transition: all 0.2s ease;
+            border-radius: 0;
+        }
+
+        #login-btn:hover {
+            background: rgba(255,255,255,0.08);
+            border-color: rgba(255,255,255,0.6);
+        }
+
+        #login-btn:active {
+            transform: scale(0.97);
+        }
+
+        
+        body.loading {
+            overflow: hidden;
+        }
+        
+        body {
+            overflow-y: scroll;
+        }
+
+        #ascii-logo {
+            font-family: 'Courier New', monospace;
+            font-size: 3px;
+            line-height: 3px;
+            color: #ffffff;
+            white-space: pre;
+            text-shadow: 0 0 10px rgba(255,255,255,0.8);
+            animation: logoFadeIn 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards, logoPulse 3s ease-in-out infinite;
+            opacity: 0;
+            max-width: 90vw;
+            overflow: hidden;
+        }
+
+        #loading-text {
+            font-family: 'Share Tech Mono', 'Courier New', monospace;
+            color: #ffffff;
+            font-size: 14px;
+            line-height: 1.4;
+            text-shadow: 0 0 5px rgba(255,255,255,0.5);
+            opacity: 0;
+            animation: logoFadeIn 1.2s cubic-bezier(0.25, 0.46, 0.45, 0.94) 0.4s forwards;
+            min-height: 1.5em;
+            text-align: center;
+            white-space: pre;
+            padding: 20px;
+            max-width: 800px;
+            position: relative;
+            z-index: 2;
+        }
+
+        .ascii-border {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            pointer-events: none;
+            opacity: 0.3;
+        }
+
+        .ascii-border.top-left {
+            top: 20px;
+            left: 30px;
+            border-top: 1px solid #ffffff;
+            border-left: 1px solid #ffffff;
+        }
+
+        .ascii-border.top-right {
+            top: 20px;
+            right: 30px;
+            border-top: 1px solid #ffffff;
+            border-right: 1px solid #ffffff;
+        }
+
+        .ascii-border.bottom-left {
+            bottom: 20px;
+            left: 30px;
+            border-bottom: 1px solid #ffffff;
+            border-left: 1px solid #ffffff;
+        }
+
+        .ascii-border.bottom-right {
+            bottom: 20px;
+            right: 30px;
+            border-bottom: 1px solid #ffffff;
+            border-right: 1px solid #ffffff;
+        }
+
+        #loading-bar-container {
+            width: 600px;
+            max-width: 80vw;
+            height: 2px;
+            background: rgba(255,255,255,0.05);
+            border: none;
+            margin-top: 15px;
+            position: relative;
+        }
+
+        #loading-bar {
+            height: 100%;
+            background: #ffffff;
+            width: 0%;
+            animation: loadProgress 2.2s ease-in-out forwards;
+            box-shadow: 0 0 8px rgba(255,255,255,0.5);
+        }
+
+        #loading-stats {
+            font-family: 'Share Tech Mono', 'Courier New', monospace;
+            font-size: 0.8em;
+            color: rgba(255,255,255,0.5);
+            margin-top: 14px;
+            margin-left: auto;
+            margin-right: auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            width: 600px;
+            max-width: 80vw;
+        }
+
+        #loading-bar-outer {
+            width: 100%;
+            height: 2px;
+            background: rgba(255,255,255,0.06);
+            position: relative;
+            overflow: hidden;
+        }
+
+        #loading-bar-inner {
+            height: 100%;
+            width: 0%;
+            background: rgba(255,255,255,0.8);
+            box-shadow: 0 0 8px rgba(255,255,255,0.5), 0 0 20px rgba(255,255,255,0.15);
+            transition: width 0.05s linear;
+            position: relative;
+        }
+
+        #loading-percent {
+            color: rgba(255,255,255,0.5);
+            font-size: 10px;
+            letter-spacing: 3px;
+        }
+
+        #loading-blocks {
+            display: none;
+        }
+
+        #skip-hint {
+            position: fixed;
+            bottom: 30px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 10px;
+            color: rgba(255,255,255,0.2);
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            z-index: 10001;
+            pointer-events: none;
+            white-space: nowrap;
+            margin: 0;
+            padding: 0;
+        }
+
+        @keyframes loadProgress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+
+        @media (max-width: 768px) {
+            #ascii-logo {
+                font-size: 2px;
+                line-height: 2px;
+            }
+            
+            #loading-text {
+                font-size: 0.8em;
+            }
+        }
+
+        @keyframes fadeOutSmooth {
+            0% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            70% {
+                opacity: 1;
+                transform: scale(1);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1.05);
+                visibility: hidden;
+            }
+        }
+
+        @keyframes logoFadeIn {
+            0% {
+                opacity: 0;
+                transform: scale(0.9) translateY(20px);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        @keyframes logoPulse {
+            0%, 100% {
+                text-shadow: 0 0 10px rgba(255,255,255,0.6);
+            }
+            50% {
+                text-shadow: 0 0 25px rgba(255,255,255,1), 0 0 35px rgba(255,255,255,0.8), 0 0 45px rgba(255,255,255,0.5);
+            }
+        }
+
+        @keyframes textBlink {
+            0%, 100% { 
+                opacity: 1; 
+            }
+            50% { 
+                opacity: 0.4; 
+            }
+        }
+
+        
+        code {
+            font-family: 'Share Tech Mono', 'Courier New', monospace;
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(255,255,255,0.12);
+            color: #e0e0e0;
+            padding: 2px 7px;
+            border-radius: 0;
+            font-size: 0.88em;
+        }
+
+        
+        .tooltip {
+            position: relative;
+            color: #ffffff;
+            cursor: help;
+            text-decoration: none;
+            border-bottom: 1px dotted rgba(255,255,255,0.4);
+            text-shadow: none;
+            transition: color 0.2s ease, border-color 0.2s ease;
+        }
+
+        .tooltip:hover {
+            color: #ffffff;
+            border-bottom-color: rgba(255,255,255,0.8);
+        }
+
+        .tooltip .tooltiptext {
+            visibility: hidden;
+            width: 260px;
+            background: #0a0a0a;
+            color: #c0c0c0;
+            text-align: left;
+            padding: 14px 16px;
+            border-radius: 0;
+            border: 1px solid rgba(255,255,255,0.2);
+            border-left: 2px solid rgba(255,255,255,0.4);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.8);
+            position: fixed;
+            z-index: 99999;
+            opacity: 0;
+            transform: translateY(5px);
+            transition: opacity 0.3s ease-out 0.15s, visibility 0.3s 0.15s, transform 0.3s ease-out 0.15s;
+            pointer-events: none;
+            font-size: 0.85em;
+            line-height: 1.5;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .tooltip .tooltiptext::before {
+            content: "// INFO";
+            display: block;
+            font-size: 0.7em;
+            color: rgba(255,255,255,0.25);
+            letter-spacing: 2px;
+            margin-bottom: 6px;
+        }
+
+
+
+        .tooltip:hover .tooltiptext {
+            visibility: visible;
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        
+        @media (max-width: 768px) {
+            .tooltip .tooltiptext {
+                width: 200px;
+                margin-left: -100px;
+                font-size: 0.8em;
+            }
+        }
+
+        /* Global link styling */
+        a {
+            color: rgba(255,255,255,0.75);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(255,255,255,0.2);
+            transition: all 0.2s ease;
+        }
+
+        a:hover {
+            color: #ffffff;
+            border-bottom-color: rgba(255,255,255,0.6);
+        }
+
+        /* Strong text styling */
+        .subsection li strong {
+            color: #d0d0d0;
+            font-weight: 600;
+        }
+
+        /* Selection styling */
+        ::selection {
+            background: rgba(255,255,255,0.15);
+            color: #ffffff;
+        }
+
+        ::-moz-selection {
+            background: rgba(255,255,255,0.15);
+            color: #ffffff;
+        }
+
+        /* Section reveal on scroll */
+        .section {
+            margin-bottom: 40px;
+        }
+
+        /* Level divider */
+        .level-divider {
+        }
+
+        /* Content area */
+        .content {
+            padding: 40px;
+            position: relative;
+            counter-reset: section-counter;
+        }
+
+        .section-title {
+            counter-increment: section-counter;
+        }
+
+        .section-title::before {
+            content: counter(section-counter, decimal-leading-zero) " //";
+            color: rgba(255,255,255,0.25);
+            margin-right: 14px;
+            font-family: 'Share Tech Mono', monospace;
+            font-weight: normal;
+            font-size: 0.7em;
+            letter-spacing: 1px;
+        }
+
+        /* Attack card hover */
+        .attack-card {
+            transition: all 0.3s ease;
+        }
+
+        .attack-card:hover {
+            transform: translateY(-3px);
+        }
+
+        /* Subsection hover transition */
+        .subsection {
+            transition: background 0.3s ease, border-left-color 0.3s ease;
+        }
+
+        /* Header HUD decorations */
+        .header-hud-left,
+        .header-hud-right {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 9px;
+            color: rgba(255,255,255,0.1);
+            letter-spacing: 2px;
+            writing-mode: vertical-lr;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        .header-hud-left {
+            left: 20px;
+        }
+
+        .header-hud-right {
+            right: 20px;
+        }
+
+        /* Subtle noise texture on container */
+        .container::after {
+            content: "";
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            opacity: 0.03;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+            background-size: 256px 256px;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* Footer enhanced styling */
+        footer p:first-of-type {
+            font-family: 'Share Tech Mono', monospace;
+            letter-spacing: 2px;
+        }
+
+        /* Gradient separator between sections */
+        .section + .section::before {
+            content: "";
+            display: block;
+            width: 100%;
+            height: 1px;
+            margin-bottom: 40px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.15), transparent);
+        }
+
+        @media (max-width: 768px) {
+            .header-hud-left,
+            .header-hud-right {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body class="loading">
+    
+    <div class="vignette-overlay"></div>
+
+    
+    <div id="scroll-to-top"></div>
+
+    <!-- Background music -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="background.mp3" type="audio/mpeg">
+    </audio>
+    <div id="music-toggle">
+        <div class="music-icon"><span></span><span></span><span></span><span></span><span></span></div>
+    </div>
+
+    <!-- TOC Sidebar -->
+    <div class="toc-overlay" id="toc-overlay"></div>
+    <nav id="toc-sidebar">
+        <div class="toc-header">Navigation</div>
+        <div class="toc-list">
+            <div class="toc-group-label">Basic</div>
+
+            <div class="toc-section">
+                <a class="toc-link toc-parent" data-target="s-identity">Identity & Privacy</a>
+                <div class="toc-children">
+                    <a class="toc-link toc-child" data-target="ss-identity-contact">Identity & contact info</a>
+                    <a class="toc-link toc-child" data-target="ss-footprint">Digital footprint & social</a>
+                    <a class="toc-link toc-child" data-target="ss-brokers">Data brokers & removal</a>
+                </div>
+            </div>
+
+            <div class="toc-section">
+                <a class="toc-link toc-parent" data-target="s-accounts">Account Security</a>
+                <div class="toc-children">
+                    <a class="toc-link toc-child" data-target="ss-passwords">Passwords & auth</a>
+                    <a class="toc-link toc-child" data-target="ss-2fa">Two-factor auth</a>
+                    <a class="toc-link toc-child" data-target="ss-email">Email security</a>
+                </div>
+            </div>
+
+            <div class="toc-section">
+                <a class="toc-link toc-parent" data-target="s-messaging">Messaging Apps</a>
+                <div class="toc-children">
+                    <a class="toc-link toc-child" data-target="ss-app-choice">App choice & trust</a>
+                    <a class="toc-link toc-child" data-target="ss-hardening-apps">Hardening your apps</a>
+                </div>
+            </div>
+
+            <div class="toc-section">
+                <a class="toc-link toc-parent" data-target="s-browsing">Safe Browsing & Downloads</a>
+                <div class="toc-children">
+                    <a class="toc-link toc-child" data-target="ss-links-files">Links, files & executables</a>
+                    <a class="toc-link toc-child" data-target="ss-platform">Platform & community</a>
+                </div>
+            </div>
+
+            <div class="toc-section">
+                <a class="toc-link toc-parent" data-target="s-browser-privacy">Browser Privacy</a>
+                <div class="toc-children">
+                    <a class="toc-link toc-child" data-target="ss-vpn">VPN & network privacy</a>
+                    <a class="toc-link toc-child" data-target="ss-browser-basics">Browser basics</a>
+                </div>
+            </div>
+
+            <div class="toc-section">
+                <a class="toc-link toc-parent" data-target="s-device">Device & System Security</a>
+                <div class="toc-children">
+                    <a class="toc-link toc-child" data-target="ss-hardware">Hardware & physical</a>
+                    <a class="toc-link toc-child" data-target="ss-antimalware">Antimalware</a>
+                    <a class="toc-link toc-child" data-target="ss-software">Software & system</a>
+                </div>
+            </div>
+
+            <div class="toc-group-label toc-adv-label">Advanced</div>
+
+            <div class="toc-section">
+                <a class="toc-link toc-parent toc-adv-link" data-target="s-adv-identity">Identity & Privacy</a>
+                <div class="toc-children">
+                    <a class="toc-link toc-child toc-adv-link" data-target="ss-adv-metadata">Metadata stripping</a>
+                </div>
+            </div>
+
+            <div class="toc-section">
+                <a class="toc-link toc-parent toc-adv-link" data-target="s-adv-accounts">Account Security</a>
+                <div class="toc-children">
+                    <a class="toc-link toc-child toc-adv-link" data-target="ss-adv-hwkeys">Hardware security keys</a>
+                    <a class="toc-link toc-child toc-adv-link" data-target="ss-adv-2fa-backup">2FA backups & recovery</a>
+                    <a class="toc-link toc-child toc-adv-link" data-target="ss-adv-email">Email hardening</a>
+                </div>
+            </div>
+
+            <div class="toc-section">
+                <a class="toc-link toc-parent toc-adv-link" data-target="s-adv-browser">Browser Privacy</a>
+                <div class="toc-children">
+                    <a class="toc-link toc-child toc-adv-link" data-target="ss-adv-vpn">VPN leaks & DNS</a>
+                    <a class="toc-link toc-child toc-adv-link" data-target="ss-adv-browser-hard">Browser hardening</a>
+                    <a class="toc-link toc-child toc-adv-link" data-target="ss-adv-fingerprint">Fingerprinting</a>
+                    <a class="toc-link toc-child toc-adv-link" data-target="ss-adv-mullvad">Mullvad Browser</a>
+                </div>
+            </div>
+
+            <div class="toc-section">
+                <a class="toc-link toc-parent toc-adv-link" data-target="s-adv-device">Device & System Security</a>
+                <div class="toc-children">
+                    <a class="toc-link toc-child toc-adv-link" data-target="ss-adv-hardware">Hardware & physical</a>
+                    <a class="toc-link toc-child toc-adv-link" data-target="ss-adv-software">Software & system</a>
+                    <a class="toc-link toc-child toc-adv-link" data-target="ss-adv-transfers">Files & transfers</a>
+                    <a class="toc-link toc-child toc-adv-link" data-target="ss-adv-cloud">Cloud security</a>
+                    <a class="toc-link toc-child toc-adv-link" data-target="ss-adv-backups">Backups & file handling</a>
+                    <a class="toc-link toc-child toc-adv-link" data-target="ss-adv-router">Router & IoT</a>
+                    <a class="toc-link toc-child toc-adv-link" data-target="ss-adv-dataclass">Data classification</a>
+                    <a class="toc-link toc-child toc-adv-link" data-target="ss-adv-zerotrust">Zero-trust mindset</a>
+                    <a class="toc-link toc-child toc-adv-link" data-target="ss-adv-network">Network tools</a>
+                </div>
+            </div>
+
+            <div class="toc-group-label">General</div>
+
+            <div class="toc-section">
+                <a class="toc-link toc-parent" data-target="s-opsec">OPSEC & Mindset</a>
+                <div class="toc-children">
+                    <a class="toc-link toc-child" data-target="ss-opsec-ops">Operational security</a>
+                    <a class="toc-link toc-child" data-target="ss-opsec-ai">AI & data exposure</a>
+                    <a class="toc-link toc-child" data-target="ss-opsec-incident">Incident response</a>
+                </div>
+            </div>
+
+            <div class="toc-section">
+                <a class="toc-link toc-parent" data-target="s-attacks">Common Cyber Attacks</a>
+            </div>
+
+        </div>
+    </nav>
+    <div id="toc-toggle">
+        <div id="toc-toggle-icon"><span></span><span></span><span></span></div>
+    </div>
+
+    
+    <div id="loading-screen">
+        <div class="ascii-border top-left"></div>
+        <div class="ascii-border top-right"></div>
+        <div class="ascii-border bottom-left"></div>
+        <div class="ascii-border bottom-right"></div>
+
+        <div style="text-align: center; font-family: 'Share Tech Mono', 'Courier New', monospace; max-width: 700px; width: 90vw; position: relative; z-index: 2; margin: auto; padding: 20px 20px;">
+
+            <div style="color: rgba(255,255,255,0.5); font-size: 11px; letter-spacing: 4px; margin-bottom: 30px; opacity: 0; animation: logoFadeIn 0.6s ease forwards 0.1s;">CYBERSECURITY 101</div>
+
+            <div style="color: #ffffff; font-size: 15px; font-weight: bold; letter-spacing: 4px; margin-bottom: 14px; text-shadow: 0 0 10px rgba(255,255,255,0.5); opacity: 0; animation: logoFadeIn 0.6s ease forwards 0.5s; animation-fill-mode: both; font-family: 'Orbitron', sans-serif;">OOOPS, YOUR FILES HAVE BEEN DECRYPTED!</div>
+
+            <div style="color: rgba(255,255,255,0.4); font-size: 12px; line-height: 2.2; margin-bottom: 24px; opacity: 0; animation: logoFadeIn 0.6s ease forwards 0.7s;">
+                just kidding. probably.<br>
+                but statistically speaking, someone has already tried.<br>
+                your neighbor's router is named "FBI Surveillance Van".<br>
+                your password is in a database somewhere. yes, that one.<br>
+                anyway. read the guide. or don't. we're not your dad.
+            </div>
+
+            <div style="color: rgba(255,255,255,0.7); font-size: 11px; font-weight: bold; letter-spacing: 3px; margin-bottom: 8px; opacity: 0; animation: logoFadeIn 0.6s ease forwards 0.9s; font-family: 'Orbitron', sans-serif;">ATTENTION!</div>
+            <div style="color: rgba(255,255,255,0.3); font-size: 11px; line-height: 2.2; margin-bottom: 24px; text-align: center; opacity: 0; animation: logoFadeIn 0.6s ease forwards 1.0s;">
+                * PRIVACY IS AN ILLUSION. ANONYMITY IS AN EFFORT<br>
+                * STAY PARANOID. IT'S NOT PARANOIA IF THEY'RE ACTUALLY WATCHING.<br>
+                * IF SOMETHING FEELS OFF, IT PROBABLY IS. TRUST YOUR GUT.
+            </div>
+
+            <div id="sys-message" style="color: rgba(255,255,255,0.35); font-size: 10px; letter-spacing: 1px; margin-bottom: 8px; min-height: 1.4em; opacity: 0; animation: logoFadeIn 0.4s ease forwards 1.3s; font-family: 'Share Tech Mono', 'Courier New', monospace;"></div>
+
+            <div id="loading-text" style="display:none;"></div>
+
+            <div id="loading-stats" style="opacity: 0; animation: logoFadeIn 0.6s ease forwards 1.4s; margin-top: 8px; max-height: 80px; overflow: hidden;">
+                <div id="loading-bar-outer">
+                    <div id="loading-bar-inner"></div>
+                </div>
+                <span id="loading-percent">0%</span>
+            </div>
+
+            <div id="login-form">
+                <div class="login-row">
+                    <span class="login-label">USER_ID:</span>
+                    <input class="login-input" type="text" placeholder="" autocomplete="off" spellcheck="false" readonly tabindex="-1">
+                </div>
+                <div class="login-row">
+                    <span class="login-label">AUTH_KEY:</span>
+                    <input class="login-input" type="password" placeholder="" autocomplete="off" readonly tabindex="-1">
+                </div>
+                <button id="login-btn">[ CONNECT ]</button>
+            </div>
+
+
+        </div>
+    </div>
+    <div id="skip-hint">click anywhere to skip</div>
+
+    <div class="container" style="position:relative;">
+        <div style="position:absolute;top:8px;left:8px;width:18px;height:18px;border-top:1px solid rgba(255,255,255,0.15);border-left:1px solid rgba(255,255,255,0.15);pointer-events:none;z-index:10;"></div>
+        <div style="position:absolute;top:8px;right:8px;width:18px;height:18px;border-top:1px solid rgba(255,255,255,0.15);border-right:1px solid rgba(255,255,255,0.15);pointer-events:none;z-index:10;"></div>
+        <div style="position:absolute;bottom:8px;left:8px;width:18px;height:18px;border-bottom:1px solid rgba(255,255,255,0.15);border-left:1px solid rgba(255,255,255,0.15);pointer-events:none;z-index:10;"></div>
+        <div style="position:absolute;bottom:8px;right:8px;width:18px;height:18px;border-bottom:1px solid rgba(255,255,255,0.15);border-right:1px solid rgba(255,255,255,0.15);pointer-events:none;z-index:10;"></div>
+        <header>
+            <div style="position:absolute;top:12px;left:50%;transform:translateX(-50%);font-family:'Share Tech Mono',monospace;font-size:0.6em;color:rgba(255,255,255,0.15);letter-spacing:4px;white-space:nowrap;pointer-events:none;z-index:3;">// CYBERSECURITY_101.exe //</div>
+            <div class="header-hud-left">SYS.OK // 0xF3A1</div>
+            <div class="header-hud-right">NODE.ACTIVE</div>
+            <h1><span class="typing-text"></span></h1>
+            <p>Protect yourself online</p>
+        </header>
+
+        
+        <div id="emergency-access">
+            <h3>[!] ALREADY COMPROMISED? [!]</h3>
+            <p>Execute incident response sequence</p>
+        </div>
+
+        <div class="content">
+
+            <div class="level-divider basic-divider" style="margin-top:0;">
+                <div class="level-label basic-label">
+                    <span class="level-bracket">[</span>
+                    <span class="level-title">BASIC LEVEL</span>
+                    <span class="level-bracket">]</span>
+                </div>
+                <div class="level-desc">Essential steps everyone should follow</div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title" id="s-identity">Identity & Privacy</h2>
+
+                                <div class="subsection">
+                    <h3 id="ss-identity-contact">Identity & contact information</h3>
+                    <ul>
+                        <li>Don't share your real email or social links publicly</li>
+                        <li>Use <span class="tooltip">aliases<span class="tooltiptext">Alternate names or email addresses that forward to your real inbox</span></span> or throwaway addresses for forums, giveaways, and game servers</li>
+                        <li>Use multiple emails: one primary for important accounts, separate ones for signups, gaming, and social</li>
+                        <li>Use email aliases/forwarding services so you can disable an address if it gets spammed or traced</li>
+                        <li>Don't put personal contact info in your public profile or Discord bio</li>
+                        <li>Use different usernames for different platforms to prevent <span class="tooltip">cross-referencing<span class="tooltiptext">Linking your different accounts together to build a profile about you</span></span></li>
+                        <li>Use a separate "<span class="tooltip">burner<span class="tooltiptext">Temporary/disposable phone number you can throw away</span></span>" number for signups (Google Voice, MySudo, Burner)</li>
+                        <li>Be careful about giving your real phone number to any platform — many services have a "find friends by phone number" feature that cross-references your number against every other user's contact list, even people you've never interacted with. This can silently link your account to your real identity or other accounts you wanted kept separate</li>
+                        <li>Enable WHOIS privacy on all domains you own — without it, your name, email, phone, and address are publicly searchable. Most registrars offer privacy protection for $3–5/year</li>
+                    </ul>
+                </div>
+
+                                <div class="subsection">
+                    <h3 id="ss-footprint">Digital footprint & social media</h3>
+                    <ul>
+                        <li>Limit social media exposure — attackers research targets on social media. Don't post workplace details, vacation plans, family info, or location data. Set profiles to private</li>
+                        <li>Don't tag your location in real-time — wait until after you've left</li>
+                        <li>Don't post information that reveals your daily routines or patterns</li>
+                        <li>Disable people tagging you in photos without approval</li>
+                        <li>Regularly audit your privacy settings on all platforms — they change frequently</li>
+                        <li>Limit who can see your posts, friends list, and personal information</li>
+                        <li>Review and revoke app permissions regularly (especially third-party apps)</li>
+                        <li>Google yourself periodically to see what information is publicly available about you — Google also allows you to request the removal of search results that display personal information about you via their Results about you tool</li>
+                        <li>Request data deletion from old accounts you no longer use</li>
+                        <li>Be careful about "fun" quizzes and personality tests — they often harvest data</li>
+                        <li>Check if your email has been in a known breach at <a href="https://haveibeenpwned.com" target="_blank" style="color:#e0e0e0;">haveibeenpwned.com</a> and subscribe to breach alerts — if your password manager has a compromised password check, run it regularly</li>
+                        <li>For deeper breach searches, check <a href="https://intelx.io" target="_blank" style="color:#e0e0e0;">intelx.io</a> (<span class="tooltip">Intelligence X<span class="tooltiptext">OSINT search engine that indexes data breaches, paste sites, and leaked databases — can reveal if your email, username, or password appeared in a dump</span></span>) — goes deeper than HIBP and indexes raw dump content including paste sites</li>
+                        <li>Don't send face pics or identifying media to people you don't fully trust</li>
+                        <li>Don't share photos that can be <span class="tooltip">reverse-searched<span class="tooltiptext">Using Google Images or TinEye to find where else a photo appears online — can link your photos to your other accounts or real identity</span></span> or traced back to your other accounts</li>
+                        <li>Avoid posting the same photo across multiple platforms — identical images can be cross-referenced to link your accounts together</li>
+                        <li>Watch out for background details in photos you share: reflections, documents, street signs, recognizable locations, and window views can all reveal where you are or live</li>
+                        <li>Assume everything you post online is permanent and could be screenshotted, leaked, or subpoenaed — even in private chats</li>
+                        <li>Don't announce when you're away from home, traveling, or on vacation — it signals an empty house</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3 id="ss-brokers">Data brokers & removal</h3>
+                    <ul>
+                        <li>Data brokers are companies that collect and sell your personal information — name, address, phone number, relatives, employment history — often without your knowledge. Sites like Spokeo, WhitePages, BeenVerified, and dozens of others aggregate this data and make it publicly searchable</li>
+                        <li>You can request manual removal from most brokers individually by filling out their opt-out or content removal forms — it's tedious but free. Search "[site name] opt out" to find the form. Results don't always stick and may need to be repeated periodically</li>
+                        <li>In regions covered by <span class="tooltip">GDPR<span class="tooltiptext">General Data Protection Regulation — EU law that gives individuals the right to access, correct, and delete personal data held by companies</span></span> or similar privacy laws, you have the legal right to request deletion of your data — most brokers must comply within 30 days. Look for a "right to erasure" or "do not sell my information" link on their site</li>
+                        <li>Automated removal services like DeleteMe, Incogni, and Optery can handle opt-outs across hundreds of brokers on your behalf — research them carefully before paying, their coverage and effectiveness vary significantly. Some are more thorough than others and pricing models differ</li>
+                        <li>No removal service gets everything — treat them as a reduction in exposure, not a complete solution. Run periodic checks on your own to see what's resurfaced</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="section">
+                <h2 class="section-title" id="s-accounts">Account Security</h2>
+
+                                <div class="subsection">
+                    <h3 id="ss-passwords">Passwords & authentication</h3>
+                    <ul>
+                        <li>Use a strong password manager + generator — consider open-source options like <a href="https://bitwarden.com" target="_blank" style="color:#e0e0e0;">Bitwarden</a> for transparency and auditability; if you want full control over your data, <a href="https://keepass.info" target="_blank" style="color:#e0e0e0;">KeePass</a> and <a href="https://github.com/dani-garcia/vaultwarden" target="_blank" style="color:#e0e0e0;">Vaultwarden</a> are solid self-hosted alternatives</li>
+                        <li>Use a unique password for every single account — if you reuse passwords and one service is breached, attackers run <span class="tooltip">credential stuffing<span class="tooltiptext">Automated attack that tries leaked email/password combinations across hundreds of other sites. Extremely common and effective against password reuse.</span></span> attacks across hundreds of other sites with your credentials until they get a hit. It doesn't matter how strong the password was — they already have it</li>
+                        <li>Never rely on yourself to invent strong passwords — always use your password manager's built-in generator. Create passwords as long and complex as the service allows: mixed case, numbers, special characters</li>
+                        <li>For passwords you must memorize (master password, device encryption), use a <span class="tooltip">diceware passphrase<span class="tooltiptext">A passphrase created by rolling physical dice and looking up words from a word list. Each word adds ~12.9 bits of entropy. 6 words = ~77 bits. Impossible to brute force, surprisingly easy to remember.</span></span> — roll five dice, look up each result in the <a href="https://www.eff.org/files/2016/07/18/eff_large_wordlist.txt" target="_blank" style="color:#e0e0e0;">EFF large word list</a>, chain 6+ words together. Example: <em>viewable fastness reluctant squishy seventeen pencil</em> — a 7-word passphrase has ~90 bits of entropy and is one of 1.7 octillion possible combinations</li>
+                        <li>The process must be fully random — do not re-roll words until you get ones you like. That defeats the entropy</li>
+                        <li>Never use password hints — they're often guessable and can partially reveal your password</li>
+                        <li>Never share passwords, even with trusted people — use password manager sharing features instead</li>
+                        <li>Write your master passphrase on paper and store it somewhere physically secure — losing it means losing access to everything inside</li>
+                        <li>Rotate passwords periodically on important accounts — use your password manager's generator every time, never reuse or slightly modify old ones. Most managers let you set expiry reminders per account</li>
+                    </ul>
+                </div>
+
+                                <div class="subsection">
+                    <h3 id="ss-2fa">Two-factor authentication</h3>
+                    <ul>
+                        <li>Enable <span class="tooltip">2FA<span class="tooltiptext">Two-Factor Authentication — requires a second verification step beyond your password. Even if your password is leaked, an attacker still can't log in without your second factor</span></span> on every account that supports it — the hierarchy from weakest to strongest is: SMS → authenticator app → hardware security key</li>
+                        <li>Avoid SMS-based 2FA when possible — SMS can be hijacked via <span class="tooltip">SIM swapping<span class="tooltiptext">Attack where an attacker convinces your carrier to transfer your number to their SIM card, intercepting all your SMS codes</span></span> and <span class="tooltip">SS7 attacks<span class="tooltiptext">Flaws in the global phone network protocol that allow attackers to intercept SMS messages and calls from anywhere in the world</span></span>. Use an authenticator app or hardware key instead</li>
+                        <li>Protect against SIM swapping — contact your carrier to enable a SIM lock PIN so your number can't be transferred without it</li>
+                        <li>Use <span class="tooltip">TOTP<span class="tooltiptext">Time-based One-Time Password — generates a 6-digit code every 30 seconds using a shared secret. Works offline, not interceptable via SIM swap</span></span> authenticator apps — <a href="https://getaegis.app" target="_blank" style="color:#e0e0e0;">Aegis</a> (Android, open source, encrypted local backup) or <a href="https://ente.io/auth" target="_blank" style="color:#e0e0e0;">Ente Auth</a> (cross-platform, end-to-end encrypted cloud sync) are the best options — avoid Authy (closed source, phone number tied) and Google Authenticator (no encryption at rest)</li>
+                        <li>Wherever <span class="tooltip">passkeys<span class="tooltiptext">Cryptographic credentials stored on your device that replace passwords entirely — phishing-proof, nothing to type, nothing to intercept. Based on FIDO2/WebAuthn standards</span></span> are supported, migrate to them — passkeys are cryptographically bound to the legitimate site, which means they are completely immune to phishing, credential stuffing, and server-side breaches. TOTP is still better than SMS, but passkeys are the strongest option available and should be your default wherever offered</li>
+                    </ul>
+                </div>
+
+                                <div class="subsection">
+                    <h3 id="ss-email">Email security</h3>
+                    <ul>
+                        <li>Use <a href="https://proton.me/mail" target="_blank" style="color:#e0e0e0;">ProtonMail</a> for sensitive communications — avoid Gmail, which scans message content for ad targeting. Use <span class="tooltip">masked emails<span class="tooltiptext">Also known as email aliases — unique, randomly generated email addresses that forward to your real inbox, keeping your actual address hidden</span></span> (email aliases) for everything else — these are unique, randomly generated addresses that forward to your main inbox. They protect your identity in breaches since your true email is never exposed, keep your real address hidden from marketers building ad-targeting profiles, let you permanently block any alias that starts getting spam, and are handy for redeeming extra free trials or new customer discounts. You can generate them directly from <a href="https://bitwarden.com/help/generator/#tab-duckduckgo-3Uj911RtQsJD9OAhUuoKrz" target="_blank" style="color:#e0e0e0;">Bitwarden's built-in generator</a> using DuckDuckGo Email Protection</li>
+                        <li>Never click links in unsolicited emails — navigate to sites directly by typing the URL</li>
+                        <li>Check sender addresses carefully — attackers use look-alike domains (paypa1.com vs paypal.com)</li>
+                        <li>Be suspicious of any urgent request involving money, credentials, or account access — verify through a separate channel</li>
+                        <li>Beware of fake password reset emails — always go to the site directly, never through an email link</li>
+                        <li>Disable automatic image loading in emails — <span class="tooltip">tracking pixels<span class="tooltiptext">Invisible 1x1 images that report back to senders when you open an email, revealing your IP and time</span></span> report when you open emails and can reveal your IP</li>
+                        <li>Don't reply to spam — it confirms your email address is active</li>
+                        <li>Use temporary email providers (<a href="https://temp-mail.org" target="_blank" style="color:#e0e0e0;">Temp-Mail.org</a>, <a href="https://www.guerrillamail.com" target="_blank" style="color:#e0e0e0;">Guerrilla Mail</a>, <a href="https://www.rovixcloud.com/temp-mail" target="_blank" style="color:#e0e0e0;">RovixCloud</a>) for throwaway signups — warning: you can't recover accounts if you lose access</li>
+                        <li>Use separate email accounts for different purposes (personal, work, shopping, throwaway)</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="section">
+                <h2 class="section-title" id="s-messaging">Messaging apps</h2>
+
+                <div class="subsection">
+                    <h3 id="ss-app-choice">App choice & trust</h3>
+                    <ul>
+                        <li>Most mainstream messaging apps are not private</li>
+                        <li><a href="https://simplex.chat" target="_blank" style="color:#e0e0e0;">SimpleX</a> and <a href="https://getsession.org" target="_blank" style="color:#e0e0e0;">Session</a> are the most privacy-oriented options available — SimpleX has no user identifiers whatsoever, not even a username or phone number, while Session routes messages through a decentralized network with no account registration required. Use them with awareness: no tool is bulletproof, and the people you communicate with are always the weakest link</li>
+                        <li>If you want to compare messengers in depth, <a href="https://offshore.cx/?page=messenger" target="_blank" style="color:#e0e0e0;">offshore.cx</a> has a detailed breakdown of popular apps across encryption, metadata collection, jurisdiction, and more</li>
+                        <li>Even on a private app, assume the conversation can be compromised from the other end — you can control your device, not theirs</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3 id="ss-hardening-apps">Hardening what you already use</h3>
+                    <ul>
+                        <li>If you use WhatsApp, disable automatic media downloads in settings — images, documents, and audio from unknown senders can deliver malicious payloads without you ever opening anything manually</li>
+                        <li>Consider using auto-deletion tools that automatically wipe your messages shortly after sending — many people assume private servers or closed communities protect them, but message history is a liability regardless of where it lives; open-source tools exist for platforms like Discord and Telegram that can automate this, or you can write your own</li>
+                        <li>Enable disappearing messages natively where the app supports it — Signal, WhatsApp, and Telegram all have this option per conversation</li>
+                        <li>Never accept files or links from people you don't know, even in group chats — group members are rarely vetted and a single compromised account can target everyone in it</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="section">
+                <h2 class="section-title" id="s-browsing">Safe Browsing & Downloads</h2>
+
+                                <div class="subsection">
+                    <h3 id="ss-links-files">Links, files & executable content</h3>
+                    <ul>
+                        <li>Don't click unknown links — even in DMs, Discord, or texts from people you know</li>
+                        <li>Treat verification links, prize-claiming links, and bot DMs as suspicious by default</li>
+                        <li>Never click links in SMS, iMessage, or WhatsApp texts — <span class="tooltip">smishing<span class="tooltiptext">SMS phishing — fake texts impersonating banks, delivery services, or contacts to steal credentials or install malware</span></span> is widespread. Attackers fake delivery alerts, bank warnings, and "verify your account" texts. Always go to the site directly or call the official number</li>
+                        <li>Don't download files from strangers or unknown sources</li>
+                        <li>Malicious code isn't limited to obvious executables — project files like Visual Studio solutions, Unity projects, or modded game files can all execute code silently alongside the legitimate program; treat anything from an untrusted source as a potential threat regardless of the file type</li>
+                        <li>Avoid opening <span class="tooltip">executables<span class="tooltiptext">Programs that can run on your computer (.exe, .app, .dmg files)</span></span>, <span class="tooltip">scripts<span class="tooltiptext">Code files that automate tasks (.bat, .sh, .py files)</span></span>, archives, or <span class="tooltip">macros<span class="tooltiptext">Automated commands in documents that can execute malicious code</span></span> from unknown people</li>
+                        <li>Never run commands or terminal scripts copied from the internet unless you understand exactly what they do</li>
+                        <li>Enable file extension visibility — malware hides as harmless files (e.g., "invoice.pdf.exe"). Windows: File Explorer → View → Show file extensions. Mac: Finder → Preferences → Show all filename extensions</li>
+                        <li>Scan suspicious files at <a href="https://www.virustotal.com/gui/home/upload" target="_blank" style="color:#e0e0e0;">VirusTotal</a>, <a href="https://metadefender.com/" target="_blank" style="color:#e0e0e0;">MetaDefender</a>, <a href="https://www.hybrid-analysis.com/" target="_blank" style="color:#e0e0e0;">Hybrid Analysis</a>, and <a href="https://virusscan.jotti.org/" target="_blank" style="color:#e0e0e0;">Jotti</a> — run the file through all of them, not just one. Each uses different engines and detection methods, so a file that comes back clean on one scanner might get flagged by another. Even then, a clean result across all four doesn't guarantee the file is safe — treat it as reducing uncertainty, not eliminating it</li>
+                    </ul>
+                </div>
+
+                                <div class="subsection">
+                    <h3 id="ss-platform">Platform & community safety</h3>
+                    <ul>
+                        <li>Don't link Spotify, Steam, or other social accounts to your Discord profile — it leaks personal info and makes you easier to identify across platforms</li>
+                        <li>Don't share your Spotify playlists or profile publicly — listening habits can be used to identify or track you</li>
+                        <li>Don't put other people in your profile or bio without their consent</li>
+                        <li>Don't authorize unknown Discord bots or random <span class="tooltip">OAuth<span class="tooltiptext">Open Authorization - allows apps to access your account without giving them your password</span></span> flows — they can harvest account data or permissions</li>
+                        <li>Avoid verifying accounts via links sent by bots — many are <span class="tooltip">IP loggers<span class="tooltiptext">Malicious links that capture your IP address the moment you click them</span></span></li>
+                        <li>Do not log into other people's accounts — it exposes your <span class="tooltip">IP<span class="tooltiptext">Internet Protocol address - your device's unique network identifier</span></span> and location to them</li>
+                        <li>Be cautious with community content (<span class="tooltip">mods<span class="tooltiptext">Modifications - user-created add-ons that change how a game works</span></span>, <span class="tooltip">plugins<span class="tooltiptext">Software components that add specific features to existing programs</span></span>) — only download from trusted sources (CurseForge, Modrinth, Steam Workshop, Nexus Mods)</li>
+                        <li>Avoid joining private or unknown Minecraft servers — server hosts can see your real IP address</li>
+                        <li>Verify if mod installers ask to run scripts or external installers — that's a red flag</li>
+                        <li>Check comment sections for warnings before downloading anything from community sources</li>
+                        <li>To hide your email from <span class="tooltip">GitHub commits<span class="tooltiptext">Saved code changes that publicly log your email by default</span></span> — go to Settings → Emails → enable "Keep my email addresses private". This only applies to future commits</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="section">
+                <h2 class="section-title" id="s-browser-privacy">Browser Privacy</h2>
+
+                <div class="subsection">
+                    <h3 id="ss-vpn">VPN & network privacy</h3>
+                    <ul>
+                        <li>Use a reputable no-logs <span class="tooltip">VPN<span class="tooltiptext">Virtual Private Network — encrypts your internet traffic and hides your IP address from sites you visit and from your ISP</span></span> — <a href="https://mullvad.net" target="_blank" style="color:#e0e0e0;">Mullvad</a> is a strong choice: strict no-logs policy, accepts anonymous payment, and doesn't require an email to sign up</li>
+                        <li>Never use public WiFi without a VPN — cafes, airports, and hotels are prime spots for <span class="tooltip">MitM attacks<span class="tooltiptext">Man-in-the-Middle — attacker sits between you and the network, intercepting traffic to steal credentials or inject malicious content</span></span></li>
+                        <li>A VPN hides your IP and encrypts traffic from your ISP — but it does not stop fingerprinting, malware, phishing, or tracking by sites you're logged into</li>
+                        <li>Always check a VPN's no-logs policy and jurisdiction — some countries legally require providers to retain data</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3 id="ss-browser-basics">Browser basics</h3>
+                    <ul>
+                        <li>Use <a href="https://brave.com" target="_blank" style="color:#e0e0e0;">Brave</a> or <a href="https://www.mozilla.org/firefox/" target="_blank" style="color:#e0e0e0;">Firefox</a> with <span class="tooltip">uBlock Origin<span class="tooltiptext">Open-source ad and tracker blocker — blocks fingerprinting scripts, malicious ads, and trackers. One of the most effective privacy extensions available</span></span> for daily browsing — blocks ads, trackers, and fingerprinting scripts by default with minimal setup</li>
+                        <li>Use privacy-respecting search engines — <a href="https://duckduckgo.com" target="_blank" style="color:#e0e0e0;">DuckDuckGo</a> or <a href="https://search.brave.com" target="_blank" style="color:#e0e0e0;">Brave Search</a> instead of Google, which builds a detailed profile from every search</li>
+                        <li>Clear <span class="tooltip">cookies<span class="tooltiptext">Small data files websites store on your device to track sessions and remember you across visits</span></span> and <span class="tooltip">cache<span class="tooltiptext">Temporary stored web content — can be used to track browsing patterns</span></span> regularly, or enable automatic clearing on browser close</li>
+                        <li>Disable third-party cookies in browser settings — they're the primary mechanism for cross-site tracking</li>
+                        <li>Enable cookie isolation if your browser supports it — Firefox's Total Cookie Protection confines each site's cookies to their own jar so they can't be used to track you across the web; Brave does this automatically through storage partitioning. Both prevent a tracker on one site from reading data it set on another</li>
+                        <li>Resist installing lots of extensions — every extension adds detectable signals that make your browser fingerprint more unique and identifiable</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="section">
+                <h2 class="section-title" id="s-device">Device & System Security</h2>
+
+                                <div class="subsection">
+                    <h3 id="ss-hardware">Hardware & physical security</h3>
+                    <ul>
+                        <li>Use <span class="tooltip">full-disk encryption<span class="tooltiptext">Encrypts your entire hard drive so data is unreadable without your password if the device is stolen</span></span> — <a href="https://www.veracrypt.fr" target="_blank" style="color:#e0e0e0;">VeraCrypt</a> for Windows, FileVault for Mac, LUKS for Linux</li>
+                        <li>Cover your webcam when not in use — use a physical shutter or tape</li>
+                        <li>Disable microphone access for apps you don't fully trust</li>
+                        <li>Never use public USB charging stations (airports, hotels, cafes) — <span class="tooltip">juice jacking<span class="tooltiptext">Attack where a compromised USB port installs malware or steals data while charging your device</span></span> can install malware silently. Use your own charger and wall outlet, or carry a power bank</li>
+                        <li>Never plug in unknown USB drives — they can contain malware that auto-executes on insert. Treat all found USBs as hostile</li>
+                        <li>Disable USB auto-run on your system to prevent automatic malware execution</li>
+                        <li>Enable automatic screen lock after short idle periods — set it to 1–2 minutes</li>
+                        <li>Consider a separate device for sensitive activities (banking, private communications)</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3 id="ss-antimalware">Proactive defense — antimalware</h3>
+                    <ul>
+                        <li>The best antivirus is Windows Defender + common sense — if you don't click shady links, don't download random files, don't run unknown executables, and don't disable security features for "convenience", you eliminate the vast majority of infection vectors before any software has to step in. Defender is a solid, built-in, always-on baseline that doesn't require installing extra closed-source software you can't audit. Prevention will always beat detection</li>
+                        <li>Don't wait to be infected to think about malware — run antimalware tools actively, not just when something feels wrong. Windows Defender is solid baseline protection if kept updated, but layering additional tools catches what signature-based scanners miss</li>
+                        <li><a href="https://www.malwarebytes.com" target="_blank" style="color:#e0e0e0;">Malwarebytes</a> (free tier) and <a href="https://www.hitmanpro.com" target="_blank" style="color:#e0e0e0;">HitmanPro</a> use behavioral and cloud-based detection — run periodic scans even if nothing seems wrong, especially after installing new software or running unfamiliar files</li>
+                        <li>For always-on paid protection, <a href="https://www.crowdstrike.com/products/endpoint-security/" target="_blank" style="color:#e0e0e0;">CrowdStrike Falcon</a>, <a href="https://www.bitdefender.com" target="_blank" style="color:#e0e0e0;">Bitdefender</a>, and <a href="https://www.eset.com" target="_blank" style="color:#e0e0e0;">ESET</a> are strong options — all offer real-time threat detection, ransomware protection, and endpoint monitoring that goes well beyond what free tools provide</li>
+                        <li>Enable <span class="tooltip">Windows Defender's tamper protection<span class="tooltiptext">Prevents malware and unauthorized software from disabling Windows Defender's real-time protection — found in Windows Security → Virus & threat protection settings</span></span> — many malware strains try to disable antivirus as their first step</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3 id="ss-software">Software & system security</h3>
+                    <ul>
+                        <li>Keep your <span class="tooltip">OS<span class="tooltiptext">Operating System — Windows, macOS, Linux. Most attacks target unpatched vulnerabilities</span></span> and software updated, but treat them differently — apply security updates immediately as they patch actively exploited vulnerabilities, but wait 1-2 weeks before installing general software updates since new releases can introduce vulnerabilities that haven't been caught yet</li>
+                        <li>Disable location services when not needed — many apps track you unnecessarily in the background</li>
+                        <li>Turn off Bluetooth and WiFi when not actively using them — both can be exploited for proximity attacks</li>
+                        <li>Enable your firewall — Windows Firewall, macOS Firewall, or UFW on Linux. The default settings block most inbound threats without any configuration</li>
+                        <li>Run your day-to-day user account without administrator privileges — most malware needs admin rights to do serious damage. Use a standard account and only elevate when you actually need to</li>
+                    </ul>
+                </div>
+
+            </div>
+
+
+            <div class="level-divider advanced-divider" id="advanced-toggle" style="cursor:pointer;">
+                <div class="level-label advanced-label">
+                    <span class="level-bracket">[</span>
+                    <span class="level-title">ADVANCED LEVEL</span>
+                    <span class="level-bracket">]</span>
+                </div>
+                <div class="level-desc">For those who want deeper control over their digital security</div>
+                <div class="advanced-expand-hint" id="advanced-hint">CLICK TO UNLOCK</div>
+            </div>
+
+            <div id="advanced-content" class="advanced-collapsed">
+
+            <div class="section">
+                <h2 class="section-title" id="s-adv-identity">Identity & Privacy</h2>
+
+                                <div class="subsection">
+                    <h3 id="ss-adv-metadata">Media & metadata stripping</h3>
+                    <ul>
+                        <li>Strip <span class="tooltip">metadata<span class="tooltiptext">Hidden information embedded in files — location, date, device model, sometimes even serial number</span></span> (<span class="tooltip">EXIF<span class="tooltiptext">Exchangeable Image File Format — hidden data embedded in photos that can reveal GPS coordinates, camera model, firmware version, and exact timestamps</span></span>) from every file before sharing — use <span class="tooltip">ExifTool<span class="tooltiptext">Command-line tool to view and bulk-remove metadata from images, documents, and audio files</span></span> or <span class="tooltip">MAT2<span class="tooltiptext">Metadata Anonymisation Toolkit — removes metadata from a wide range of file types including PDFs, Office files, and images</span></span>. A photo taken on your phone contains your exact GPS coordinates, device model, and timestamp by default</li>
+                        <li>Even after stripping EXIF, images may still carry <span class="tooltip">steganographic<span class="tooltiptext">Hidden data embedded within the image pixels themselves — invisible to the eye but detectable by tools. Used by some platforms to watermark images to trace the original uploader</span></span> watermarks — some platforms embed invisible identifiers to trace leaks back to the source account</li>
+                        <li>Documents (PDF, DOCX) carry metadata too — author name, edit timestamps, tracked changes, and sometimes previous content. Strip with ExifTool or use MAT2 before sending sensitive files</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="section">
+                <h2 class="section-title" id="s-adv-accounts">Account Security</h2>
+
+                                <div class="subsection">
+                    <h3 id="ss-adv-hwkeys">Hardware security keys</h3>
+                    <ul>
+                        <li><span class="tooltip">FIDO2<span class="tooltiptext">Fast IDentity Online 2 — open authentication standard that uses public-key cryptography. The private key never leaves the device and the challenge is domain-bound, making phishing mathematically impossible</span></span> / <span class="tooltip">WebAuthn<span class="tooltiptext">Web Authentication API — the browser standard that implements FIDO2. When you insert a key and tap it, the key signs a challenge tied to the exact domain — a fake site gets a different challenge and the signature will never match</span></span> hardware keys (e.g. <a href="https://www.yubico.com" target="_blank" style="color:#e0e0e0;">YubiKey</a>) are the gold standard for account security — they are phishing-resistant by design</li>
+                        <li>What hardware keys protect against: remote brute-force attacks (attacker has no key), phishing (keys are cryptographically bound to the real domain — they simply won't authenticate on a fake site), and credential database leaks (stolen password + no key = no access)</li>
+                        <li>What hardware keys do <em>not</em> protect against: a compromised machine (malware can act as you after login), physical threats, bad security habits elsewhere, the website itself being hacked, or accounts that don't support FIDO2</li>
+                        <li>Think of it like a good lock on your front door — it doesn't help if your walls are made of glass. Security is about layers. A hardware key is one strong layer, not a complete solution</li>
+                        <li>Always register two keys on every account — one primary, one backup stored safely offline. If you lose your only key you can get permanently locked out</li>
+                        <li>YubiKey 5 series supports FIDO2, TOTP, OpenPGP, PIV, and more — the Security Key series is cheaper and covers FIDO2/WebAuthn only, which is sufficient for most people</li>
+                    </ul>
+                </div>
+
+                                <div class="subsection">
+                    <h3 id="ss-adv-2fa-backup">2FA backups & recovery</h3>
+                    <ul>
+                        <li>Always save your <span class="tooltip">recovery codes<span class="tooltiptext">One-time backup codes provided when you enable 2FA — store them in your password manager or printed in a physically secure location. Each code can only be used once</span></span> when enabling 2FA — store them in your password manager or printed and locked away, not in a screenshot on your phone</li>
+                        <li>When using TOTP, back up the shared secrets — either export encrypted from Aegis, use Ente Auth's encrypted cloud sync, or copy the QR code secret into an encrypted container like <a href="https://www.veracrypt.fr" target="_blank" style="color:#e0e0e0;">VeraCrypt</a> at setup time</li>
+                        <li>Hardware key users: register two keys with the same accounts — never rely on a single physical device. Keys can be lost, stolen, or simply stop working over time</li>
+                        <li>Don't reuse recovery emails or phone numbers across accounts — a single compromised recovery contact cascades across everything</li>
+                        <li>Use a secondary, dedicated recovery email address that is not publicly connected to your identity and has its own strong password and 2FA</li>
+                    </ul>
+                </div>
+
+                                <div class="subsection">
+                    <h3 id="ss-adv-email">Email hardening</h3>
+                    <ul>
+                        <li>Enable <span class="tooltip">SPF<span class="tooltiptext">Sender Policy Framework - validates that emails are sent from authorized servers</span></span>, <span class="tooltip">DKIM<span class="tooltiptext">DomainKeys Identified Mail - cryptographically verifies email authenticity</span></span>, and <span class="tooltip">DMARC<span class="tooltiptext">Domain-based Message Authentication - tells servers how to handle emails that fail authentication</span></span> if you own a domain — prevents email spoofing in your name</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="section">
+                <h2 class="section-title" id="s-adv-browser">Browser Privacy</h2>
+
+                                <div class="subsection">
+                    <h3 id="ss-adv-vpn">VPN leaks & DNS hardening</h3>
+                    <ul>
+                        <li>Use <span class="tooltip">WireGuard<span class="tooltiptext">Modern VPN protocol — faster, leaner, and more auditable than OpenVPN or IKEv2. Smaller codebase means smaller attack surface. Mullvad supports it natively</span></span> as your VPN protocol — it's faster and has a far smaller attack surface than OpenVPN or IKEv2. Set it in Mullvad's app under Settings → VPN settings → Tunnel protocol</li>
+                        <li>Enable <span class="tooltip">multi-hop<span class="tooltiptext">Routes your traffic through two separate VPN servers in different countries — the entry server only knows your real IP, the exit server only knows the destination. Neither knows both at once</span></span> (double VPN) — your traffic enters through one server and exits through a second in a different country. The entry node sees your IP but not your destination; the exit node sees your destination but not your IP. Found in Mullvad app → Settings → VPN settings → Enable multi-hop</li>
+                        <li>Enable <span class="tooltip">quantum-resistant tunnels<span class="tooltiptext">Adds a post-quantum key exchange layer on top of WireGuard — protects against future quantum computers that could break current encryption. Mullvad implements this using Kyber-1024 alongside the standard Curve25519 handshake</span></span> in Mullvad — protects against future quantum computers that could retroactively decrypt intercepted traffic. Enable under Settings → VPN settings → Quantum-resistant tunnel. Requires WireGuard</li>
+                        <li>Disable <span class="tooltip">WebRTC<span class="tooltiptext">Web Real-Time Communication — browser API that can expose your real local IP address even when you're behind a VPN. Sites use it to unmask VPN users</span></span> in your browser — it leaks your real IP even with a VPN active. Disable it via uBlock Origin's settings or browser flags. Test at <a href="https://browserleaks.com/webrtc" target="_blank" style="color:#e0e0e0;">browserleaks.com/webrtc</a></li>
+                        <li>Use encrypted <span class="tooltip">DNS<span class="tooltiptext">Domain Name System — translates domain names into IP addresses. Unencrypted DNS is plaintext — your ISP sees every domain you visit even through a VPN</span></span> to prevent your ISP from logging every domain you visit — Mullvad's hardened <a href="https://mullvad.net/en/help/dns-over-https-and-dns-over-tls" target="_blank" style="color:#e0e0e0;">DNS over HTTPS/TLS</a> resolver blocks ads, trackers, and malware at the DNS level. Without it, DNS queries leak outside the VPN tunnel even when traffic is encrypted</li>
+                        <li>Enable Mullvad's <span class="tooltip">DAITA<span class="tooltiptext">Defence Against AI-guided Traffic Analysis — adds noise to your traffic patterns to defeat AI-based analysis that can identify VPN users and their activities even through encryption</span></span> feature — defeats AI-guided traffic analysis that can profile VPN users even through encryption by adding cover traffic</li>
+                        <li>Check for <span class="tooltip">DNS leaks<span class="tooltiptext">When your DNS queries bypass the VPN tunnel and go directly to your ISP's resolver — exposing every domain you visit despite being on a VPN</span></span> regularly at <a href="https://mullvad.net/check" target="_blank" style="color:#e0e0e0;">mullvad.net/check</a> — a leaking VPN provides a false sense of security</li>
+                        <li>Use Mullvad's <span class="tooltip">SOCKS5 proxy<span class="tooltiptext">Used on top of the VPN — routes a specific app or browser through a different Mullvad server than your main VPN connection, adding an extra hop. The proxy runs inside the VPN tunnel so traffic is still encrypted</span></span> alongside the VPN for per-app routing — while the VPN covers all your traffic, you can point a specific app or browser through a separate Mullvad exit node via the proxy. This further minimizes your computer's identity from being revealed, reduces CAPTCHAs, and adds an extra routing layer without exposing unencrypted traffic. Configure it in your app's proxy settings while the VPN is active. <a href="https://mullvad.net/en/help/socks5-proxy" target="_blank" style="color:#e0e0e0;">Setup guide here</a></li>
+                    </ul>
+                </div>
+
+                                <div class="subsection">
+                    <h3 id="ss-adv-browser-hard">Browser hardening & compartmentalization</h3>
+                    <ul>
+                        <li>Use <a href="https://mullvad.net/en/browser" target="_blank" style="color:#e0e0e0;">Mullvad Browser</a> or <a href="https://www.torproject.org/download/" target="_blank" style="color:#e0e0e0;">Tor Browser</a> for sessions requiring strong anonymity — never use your regular browser for these</li>
+                        <li>Use <span class="tooltip">container tabs<span class="tooltiptext">Browser feature that fully isolates websites from each other — Facebook in one container can't see cookies or sessions from your bank in another</span></span> (Firefox Multi-Account Containers) to isolate different activities from each other — each container has its own cookies, storage, and identity</li>
+                        <li>Disable <span class="tooltip">JavaScript<span class="tooltiptext">Powers most fingerprinting, tracking, and browser exploits — disabling it breaks many sites but massively reduces attack surface on untrusted pages</span></span> on untrusted or unfamiliar sites using uBlock Origin's blocking mode or NoScript — most drive-by exploits require JS</li>
+                        <li>Compartmentalize browsers by purpose — never mix sensitive sessions with everyday use. Use Mullvad/Tor for anonymous activity, Brave or Firefox for daily browsing, and a separate profile for accounts tied to your real identity</li>
+                        <li>LibreWolf is a hardened Firefox fork with privacy defaults already configured — a good daily driver if you prefer Firefox's extension ecosystem with less manual setup</li>
+                    </ul>
+                </div>
+
+                                <div class="subsection">
+                    <h3 id="ss-adv-fingerprint">Browser fingerprinting — blend in, don't hide</h3>
+                    <ul>
+                        <li>A <span class="tooltip">browser fingerprint<span class="tooltiptext">A near-unique profile built from your GPU rendering, fonts, screen size, audio quirks, and more — works even with VPNs and cookie deletion</span></span> is built from GPU rendering, fonts, audio quirks, screen metrics and more — VPNs and cookie deletes don't stop it</li>
+                        <li>The goal is to blend into the largest crowd possible, not to disappear or randomize wildly — over-spoofing makes you look more suspicious to modern <span class="tooltip">ML-based detectors<span class="tooltiptext">Machine learning systems that flag browsers with inconsistent or unusual fingerprint signals as automated/suspicious</span></span></li>
+                        <li>Best for anonymity: <a href="https://mullvad.net/en/browser" target="_blank" style="color:#e0e0e0;">Mullvad Browser</a> or <a href="https://www.torproject.org/download/" target="_blank" style="color:#e0e0e0;">Tor Browser</a> — both force a large anonymity set where thousands of users look identical to sites</li>
+                        <li>Best daily drivers: Brave with Shields set to Aggressive — blocks fingerprinting scripts and randomizes signals per session; or Firefox with uBlock Origin and privacy.resist.fingerprinting enabled in about:config. Both are solid choices, combine either with a no-logs VPN</li>
+                        <li>Firefox option: Enable Enhanced Tracking Protection → Strict, then set <code>privacy.resistFingerprinting = true</code> and <code>privacy.resistFingerprinting.letterboxing = true</code> in <code>about:config</code>. Add uBlock Origin — avoid heavy customization or extra extensions</li>
+                        <li>Limit extensions to 2–4 max — every extension adds detectable signals that make your fingerprint more unique</li>
+                        <li>Compartmentalize — use Mullvad/Tor for sensitive sessions, Brave/Firefox for daily browsing. Never mix personal logins across them</li>
+                        <li>Test your fingerprint at <a href="https://coveryourtracks.eff.org" target="_blank" style="color:#e0e0e0;">coveryourtracks.eff.org</a> (aim for "randomized" or "not unique") and <a href="https://amiunique.org" target="_blank" style="color:#e0e0e0;">amiunique.org</a> — don't guess, verify</li>
+                        <li><span class="tooltip">Canvas<span class="tooltiptext">HTML element used to render graphics — the exact pixel output varies per GPU/driver, making it a powerful fingerprinting vector</span></span>, <span class="tooltip">WebGL<span class="tooltiptext">Browser API for 3D graphics — reveals GPU model and driver details, highly unique per device</span></span>, and <span class="tooltip">audio fingerprinting<span class="tooltiptext">Tiny differences in how your system processes audio are used to identify you across sites</span></span> are the hardest vectors to spoof — purpose-built browsers handle these automatically; extensions rarely do it well</li>
+                    </ul>
+                </div>
+
+                                <div class="subsection">
+                    <h3 id="ss-adv-mullvad">Mullvad Browser — what it protects and what breaks it</h3>
+                    <ul>
+                        <li>Mullvad Browser is private until you touch the settings — out of the box it randomizes <span class="tooltip">canvas fingerprints<span class="tooltiptext">Each render produces slightly different pixel values, making the output non-unique across Mullvad users</span></span>, disables <span class="tooltip">WebGL<span class="tooltiptext">Disabled by default to prevent GPU-based fingerprinting</span></span> and <span class="tooltip">WebAuthn<span class="tooltiptext">Web Authentication — disabled by default to prevent device-based fingerprinting</span></span>, standardizes language/audio/input devices across all users, and wipes cookies, supercookies, and stored data on close</li>
+                        <li>Don't install extensions and don't touch about:config — any extension can modify page behavior and shady scripts can detect which extensions you're running, reporting it back to the server</li>
+                        <li>You can run multiple isolated profiles — start from command line with <code>mullvad-browser -P</code>. Use one for anonymous browsing (no extensions), another for social networks with your own settings. Profiles are fully isolated from each other</li>
+                        <li>If you customize, know what breaks: disabling <span class="tooltip">letterboxing<span class="tooltiptext">Gray padding added around the page to hide your exact window size — disabling it reveals your screen resolution</span></span> exposes your real window size; turning off <code>privacy.resistFingerprinting.randomDataOnCanvasExtract</code> breaks canvas randomization; <code>privacy.resistFingerprinting.spoofOsInUserAgentHeader</code> likely makes you more unique, not less</li>
+                        <li>Relatively safe to enable: <code>security.webauth.webauthn</code> for hardware security keys, and <code>privacy.resistFingerprinting.target_video_res</code> to allow video above 480p</li>
+                        <li>Restart the browser regularly and rotate your VPN server/location — this clears all cookies and tracking data and changes your exit IP</li>
+                        <li>Be careful with proxy extensions — they save your proxy exit after closing the browser, persisting your identity across sessions</li>
+                        <li>Logging in anywhere with real data breaks your anonymity for that session — use <span class="tooltip">temp mail<span class="tooltiptext">Disposable email addresses for signups — keeps your real identity separate</span></span> and temporary phone numbers</li>
+                        <li>Don't ignore <span class="tooltip">DAITA<span class="tooltiptext">Defence Against AI-guided Traffic Analysis — Mullvad VPN feature that adds noise to your traffic patterns to defeat AI-based traffic analysis</span></span> — Mullvad VPN's obfuscation feature that defeats AI-guided traffic analysis</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            <div class="section">
+                <h2 class="section-title" id="s-adv-device">Device & System Security</h2>
+
+                <div class="subsection">
+                    <h3 id="ss-adv-hardware">Hardware & physical security</h3>
+                    <ul>
+                        <li>Enable <span class="tooltip">Secure Boot<span class="tooltiptext">UEFI feature that verifies the bootloader hasn't been tampered with before loading the OS — prevents bootkits and rootkits installed before Windows/Linux starts</span></span> in your UEFI settings — it verifies the bootloader hasn't been tampered with before your OS loads, blocking bootkits and rootkits</li>
+                        <li>Set a strong <span class="tooltip">BIOS/UEFI<span class="tooltiptext">Basic Input/Output System — firmware that initializes hardware before the OS loads. A password prevents boot-level tampering</span></span> password — without it, an attacker with brief physical access can disable Secure Boot or boot from external media</li>
+                        <li>For maximum anonymity, run <a href="https://tails.net" target="_blank" style="color:#e0e0e0;">Tails OS</a> from USB — it leaves no trace after shutdown and routes all traffic through Tor</li>
+                        <li>Dead man's switches — some laptops support presence detection and can lock automatically when you step away. Check your OS settings. For stronger protection, <a href="https://www.buskill.in" target="_blank" style="color:#e0e0e0;">BusKill</a> is a USB cable that automatically locks or wipes your machine the moment it's physically disconnected — designed for high-risk situations where someone might grab your device while it's unlocked</li>
+                        <li>Evil maid attacks — if a device leaves your possession even briefly, assume it could be physically tampered with. When possible, buy devices in person from a physical store rather than having them shipped to your address (shipping intercept attacks exist). Never leave a laptop unattended in a hotel room or public space. Full-disk encryption + Secure Boot mitigates most evil maid scenarios but not all</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3 id="ss-adv-software">Software & system security</h3>
+                    <ul>
+                        <li>Close unnecessary open ports — scan your own system with <a href="https://nmap.org" target="_blank" style="color:#e0e0e0;">Nmap</a> to see what's exposed, then close what you don't need</li>
+                        <li>Configure your firewall beyond defaults — pfSense or UFW with explicit allow rules, default deny posture</li>
+                        <li>Use intrusion detection — <a href="https://www.snort.org" target="_blank" style="color:#e0e0e0;">Snort</a> or <a href="https://suricata.io" target="_blank" style="color:#e0e0e0;">Suricata</a> can detect attacks in real-time on your network</li>
+                    </ul>
+                </div>
+
+
+                <div class="subsection">
+                    <h3 id="ss-adv-transfers">Data, files & secure transfers</h3>
+                    <ul>
+                        <li>For truly secure file transfers use <a href="https://onionshare.org" target="_blank" style="color:#e0e0e0;">OnionShare</a> — it hosts files as a temporary Tor hidden service so the recipient downloads directly from your machine with no third-party server involved</li>
+                        <li><a href="https://magic-wormhole.readthedocs.io" target="_blank" style="color:#e0e0e0;">Magic Wormhole</a> gives quick end-to-end encrypted peer-to-peer transfers via a short one-time code — nothing touches a server</li>
+                        <li>Encrypt files before transferring them regardless of the channel — use <a href="https://www.7-zip.org" target="_blank" style="color:#e0e0e0;">7-Zip</a> with AES-256 or <a href="https://www.veracrypt.fr" target="_blank" style="color:#e0e0e0;">VeraCrypt</a> to wrap files before sending. Share the password through a separate channel so interception of one doesn't expose both</li>
+                        <li>Verify file integrity with <span class="tooltip">checksums<span class="tooltiptext">A unique hash of a file — if the checksum matches the official one, the file hasn't been tampered with</span></span> (SHA-256) when downloading important software — compare against the official hash on the developer's site</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3 id="ss-adv-cloud">Cloud security — if you must use it</h3>
+                    <ul>
+                        <li>If you use cloud storage or services, enable MFA on every cloud account — AWS, GCP, Dropbox, Google Drive — a compromised cloud account with no 2FA is an open door to everything you've stored</li>
+                        <li>Use <span class="tooltip">client-side encryption<span class="tooltiptext">Encrypting data on your own device before it's uploaded — the cloud provider only ever sees ciphertext and cannot read your files even if subpoenaed</span></span> before uploading anything sensitive — tools like <a href="https://rclone.org" target="_blank" style="color:#e0e0e0;">rclone</a> with the <code>--crypt</code> backend let you encrypt files locally and sync them to any cloud provider. The provider sees only ciphertext</li>
+                        <li>Regularly audit who has access to your cloud resources — revoke old app authorizations, inactive accounts, and OAuth tokens you no longer use</li>
+                        <li>Review access logs if your provider offers them — unexpected logins from unknown IPs or regions are a red flag</li>
+                        <li>Apply the principle of <span class="tooltip">least privilege<span class="tooltiptext">Grant only the minimum permissions necessary. A service that only reads files should never have delete permissions.</span></span> — each app or service should only have the exact permissions it needs, nothing more</li>
+                        <li>Prefer providers that publish transparency reports and have a clear no-logging policy — Proton Drive is end-to-end encrypted by default and cannot read your files even internally</li>
+                    </ul>
+                </div>
+
+                                <div class="subsection">
+                    <h3 id="ss-adv-backups">Backups & secure file handling</h3>
+                    <ul>
+                        <li>Follow the <span class="tooltip">3-2-1-1 rule<span class="tooltiptext">An enhanced version of the classic 3-2-1 backup rule — adds a mandatory air-gapped/immutable copy to defend against ransomware that can encrypt or delete any connected backup</span></span> — 3 copies of your data total (production + 2 backups), on 2 different storage types (e.g. SSD + NAS), 1 copy stored off-site (geographically separate — a trusted person's house, a bank safe deposit box), plus +1 extra copy that is fully <span class="tooltip">air-gapped<span class="tooltiptext">Physically disconnected from all networks and power — ransomware cannot encrypt or delete what it cannot reach. Connect only briefly during scheduled updates, then disconnect and store securely</span></span>/offline — this last copy is the key enhancement and cannot be altered, deleted, or reached by malware even if your main machine and NAS are both compromised</li>
+                        <li>Your production copy lives on your daily machine or NAS — your local backup syncs automatically to a secondary NAS or a separate volume (use <a href="https://restic.net" target="_blank" style="color:#e0e0e0;">restic</a>, rsync, or <a href="https://www.veracrypt.fr" target="_blank" style="color:#e0e0e0;">VeraCrypt</a>-encrypted volumes) — your off-site copy is an encrypted drive stored away from home that you rotate in every 1-4 weeks to update — and your air-gapped +1 copy is a completely disconnected encrypted drive stored in a fireproof safe or second off-site location, updated infrequently (e.g. quarterly or after major changes), connected only briefly to refresh then immediately disconnected again</li>
+                        <li>The air-gapped copy is your last line of defense — ransomware can encrypt every drive on your network, wipe NAS shares, and even corrupt cloud sync copies in seconds, but it cannot touch a drive that is physically unplugged and locked away. Without this copy, a single infection can destroy every backup you have</li>
+                        <li>Use versioned backups — keep multiple versions so you can restore from before a ransomware hit or corruption event, not just the most recent state</li>
+                        <li>Test your backups periodically — a backup you've never restored from is a backup you don't actually have. Run a test restore on a non-critical file at least once every few months</li>
+                        <li>Encrypt all your backups — an unencrypted NAS or portable drive is a liability if accessed or stolen. Use <a href="https://www.veracrypt.fr" target="_blank" style="color:#e0e0e0;">VeraCrypt</a> containers for all backup volumes</li>
+                        <li>Prioritize what actually matters — at minimum back up: documents, photos, passwords (already in your manager), 2FA secrets, and anything irreplaceable</li>
+                        <li>Avoid cloud storage for sensitive files — store locally with <span class="tooltip">encryption<span class="tooltiptext">Converting data into unreadable code that only you can decrypt with the right key or password</span></span> (VeraCrypt). If you must use cloud, use Proton Drive or <span class="tooltip">self-host<span class="tooltiptext">Run your own storage server instead of relying on third-party cloud providers</span></span></li>
+                        <li>Securely delete files when you no longer need them — standard deletion leaves data recoverable. Use BleachBit or Eraser to wipe data properly</li>
+                        <li>Don't screenshot or save sensitive info in unencrypted notes apps</li>
+                        <li>Use password-protected <span class="tooltip">archives<span class="tooltiptext">Compressed file containers (.zip, .7z) — use 7-Zip with AES-256 encryption for secure sharing</span></span> (7-Zip with <span class="tooltip">AES-256<span class="tooltiptext">Advanced Encryption Standard with 256-bit keys — military-grade symmetric encryption</span></span>) for sending sensitive files</li>
+                        <li>Never store passwords, <span class="tooltip">private keys<span class="tooltiptext">Secret cryptographic keys used to decrypt data or access crypto wallets — losing them means losing access forever</span></span>, or sensitive documents in plain text</li>
+                    </ul>
+                </div>
+
+                                <div class="subsection">
+                    <h3 id="ss-adv-router">Router & IoT security</h3>
+                    <ul>
+                        <li>Change your router's default password immediately — default credentials are publicly known and actively scanned for</li>
+                        <li>Disable <span class="tooltip">WPS<span class="tooltiptext">WiFi Protected Setup — convenient but has severe security flaws that allow attackers to crack your WiFi password in hours</span></span> on your router — it has known vulnerabilities that can be exploited to crack your WiFi password</li>
+                        <li>Use WPA3 encryption if your router supports it — if not, use WPA2-AES at minimum. Never use WPA or WEP</li>
+                        <li>Disable <span class="tooltip">UPnP<span class="tooltiptext">Universal Plug and Play — automatically opens ports for devices, which attackers can exploit. Disable it and configure port forwarding manually when needed</span></span> on your router — it automatically opens ports and creates security holes</li>
+                        <li>Put <span class="tooltip">IoT<span class="tooltiptext">Internet of Things — smart devices like cameras, thermostats, speakers, and locks that connect to the internet</span></span> devices on a separate guest network — if compromised, they can't reach your main computers</li>
+                        <li>Never expose IoT devices directly to the internet — use a VPN for remote access instead</li>
+                        <li>Change default credentials on ALL IoT devices — cameras, NAS drives, printers all ship with known default passwords</li>
+                        <li>Update router firmware regularly — routers are rarely updated by default but contain critical vulnerabilities</li>
+                        <li>Disable remote management on your router unless absolutely necessary</li>
+                        <li>Review connected devices regularly — an unknown device on your network is a red flag</li>
+                    </ul>
+                </div>
+
+                                <div class="subsection">
+                    <h3 id="ss-adv-dataclass">Data classification</h3>
+                    <ul>
+                        <li>Not all data needs the same level of protection — categorize before you store or share: Public (can be freely shared), Sensitive (personal but not critical — treat with care), Confidential (financial, medical, legal, credentials — strong encryption, access control, minimal sharing)</li>
+                        <li>Apply protections proportional to the category — confidential data should never touch unencrypted cloud storage, public Wi-Fi, or devices without full-disk encryption</li>
+                        <li>Be honest about what category something falls into — most people underclassify. Your home address combined with your schedule is confidential, not public</li>
+                        <li>Minimize how much confidential data you store at all — data you don't hold can't be stolen from you</li>
+                    </ul>
+                </div>
+
+                                <div class="subsection">
+                    <h3 id="ss-adv-zerotrust">Zero-trust mindset</h3>
+                    <ul>
+                        <li><span class="tooltip">Zero trust<span class="tooltiptext">Security model where no user, device, or network is trusted by default — every request must be verified regardless of where it comes from, even inside your own network</span></span> is a security model built on one assumption: <em>nothing is safe by default</em>. Not your home network, not your work VPN, not your own devices. Every access request should be verified, authenticated, and limited</li>
+                        <li>Treat your internal network the same as a public one — segment devices, require authentication between them, and don't assume something is safe just because it's on your LAN</li>
+                        <li>Don't trust a device just because you own it — if it's been out of your control, treat it as potentially compromised</li>
+                        <li>Assume breach — operate as if an attacker may already be inside. Log, monitor, and limit blast radius by keeping systems compartmentalized</li>
+                        <li>Access should expire — temporary access, rotating credentials, and session timeouts reduce the window an attacker can exploit a stolen token</li>
+                    </ul>
+                </div>
+
+                                <div class="subsection">
+                    <h3 id="ss-adv-network">Advanced network tools</h3>
+                    <ul>
+                        <li>Use <span class="tooltip">VLANs<span class="tooltiptext">Virtual Local Area Networks — logical network segments that isolate traffic. IoT devices on one VLAN can't reach your computers on another, even on the same physical router</span></span> to segment your network — put IoT devices, guest devices, and personal computers on separate VLANs. If a smart bulb or camera is compromised, it can't reach your main machines</li>
+                        <li><a href="https://pi-hole.net" target="_blank" style="color:#e0e0e0;">Pi-hole</a> is a DNS-level ad and malware blocker you run on your local network — it blocks known malicious domains before a connection is even made, for every device on your network including ones you can't install software on (smart TVs, consoles)</li>
+                        <li>Combine Pi-hole with <span class="tooltip">DNS-over-HTTPS<span class="tooltiptext">Encrypts DNS queries so your ISP can't see which domains you're resolving. Normally DNS is plaintext and fully visible to your provider.</span></span> (DoH) or DNS-over-TLS upstream resolvers (Cloudflare 1.1.1.1, Mullvad DNS) to prevent your ISP from seeing your DNS queries</li>
+                        <li><a href="https://www.wireshark.org" target="_blank" style="color:#e0e0e0;">Wireshark</a> lets you capture and inspect actual network traffic — useful for auditing what your devices are phoning home to. Run it occasionally to see what's leaving your network</li>
+                        <li>Keep your firewall set to default-deny — explicitly allow only what you need. Every open port is an attack surface</li>
+                        <li>Replace stock router firmware with <a href="https://openwrt.org" target="_blank" style="color:#e0e0e0;">OpenWrt</a> for deeper control, proper security updates, and features like VLANs and custom DNS — far more secure than most ISP-supplied firmware</li>
+                    </ul>
+                </div>
+
+            </div>
+
+            </div> <!-- end advanced-content -->
+
+            <div class="section">
+                <h2 class="section-title" id="s-opsec">OPSEC & Mindset</h2>
+
+                                <div class="subsection">
+                    <h3 id="ss-opsec-ops">Operational security (<span class="tooltip">OPSEC<span class="tooltiptext">Operations Security — the practice of protecting sensitive information through careful behavior, compartmentalization, and awareness</span></span>)</h3>
+                    <ul>
+                        <li>Don't discuss sensitive plans or activities on monitored, public, or third-party platforms — assume any platform can be subpoenaed or breached</li>
+                        <li>Don't mix personas — keep different online identities completely separate: different accounts, devices, browsers, and email addresses. One slip links them permanently</li>
+                        <li>Be aware of <span class="tooltip">timezone leaks<span class="tooltiptext">The time you post can reveal your approximate location or timezone, especially across multiple posts over time</span></span> in posts and timestamps — consistent posting hours across accounts can be used to correlate them</li>
+                        <li>Vary your patterns — don't be predictable in login times, posting times, locations, or online habits. A pattern looks like: posting on the same account every day between 9pm and 11pm, always from the same city — over time that alone can be used to correlate accounts or narrow down who you are</li>
+                        <li>Use different writing styles for different personas — writing patterns (<span class="tooltip">stylometry<span class="tooltiptext">Linguistic analysis of writing style — word choice, sentence length, punctuation habits — used to link anonymous writing to real identities</span></span>) can be used to link anonymous accounts to your real identity</li>
+                        <li>Don't reuse unique phrases, jokes, or expressions across different identities</li>
+                        <li>Be cautious about what you "like" or interact with — engagement creates a detailed profile of your interests, beliefs, and habits</li>
+                        <li>Minimize personal details shared anywhere: hometown, workplace, school, family, birthdate</li>
+                        <li>Every detail is another data point someone investigating you can use</li>
+                        <li>Human error is the greatest vulnerability — think before you click, post, share, or trust</li>
+                        <li>If you think you're targeted, preserve evidence and consider immediately rotating all keys, passwords, and contact points</li>
+                        <li>Consult professionals if needed — some situations require legal, forensic, or law enforcement involvement</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3 id="ss-opsec-ai">AI tools & data exposure</h3>
+                    <ul>
+                        <li>AI assistants like ChatGPT, Claude, Gemini, and others process and in many cases store the content of your conversations — by default, many use your inputs to improve their models. Treat them like a public forum: don't paste anything you wouldn't want logged</li>
+                        <li>Sensitive data people commonly paste without thinking: source code with API keys or credentials, internal company documents, personal medical or legal information, private messages, and financial data. Any of it could be stored server-side, reviewed by employees, or exposed in a breach</li>
+                        <li>Most providers offer an opt-out from training data collection — find it in account settings and disable it if you use these tools regularly. Some offer a "temporary chat" or incognito mode that doesn't retain history</li>
+                        <li>Browser-based AI integrations and extensions may have access to everything you type and every page you visit — read the permissions before installing any</li>
+                    </ul>
+                </div>
+
+                                <div class="subsection" id="incident-response">
+                    <h3 id="ss-opsec-incident">Incident response (breached /&nbsp;<span class="tooltip">ratted<span class="tooltiptext">Infected with a RAT (Remote Access Trojan) — malware that gives an attacker full remote control of your device</span></span>)</h3>
+                    <ul>
+                        <li>Immediately disconnect from the internet — unplug ethernet, disable WiFi and Bluetooth</li>
+                        <li>Do NOT log into any accounts from the compromised device</li>
+                        <li>Change all passwords from a different, clean device</li>
+                        <li>Enable 2FA on all accounts if you haven't already</li>
+                        <li>Check for unauthorized logins and active sessions across all accounts and revoke them</li>
+                        <li>Revoke all <span class="tooltip">API tokens<span class="tooltiptext">Access keys that allow apps to use your account without your password — revoke all if compromised</span></span> and active sessions immediately</li>
+                        <li>Scan the compromised device with multiple tools — Malwarebytes, HitmanPro, Windows Defender Offline; if scans return clean but you still suspect infection, do not trust that result — a <span class="tooltip">rootkit<span class="tooltiptext">Malware that hides itself and other malicious software from the OS and security tools by operating at a lower level than what scans can see</span></span> or <span class="tooltip">bootkit<span class="tooltiptext">A rootkit that infects the bootloader or firmware, loading before the OS and making it invisible to any software running inside the OS</span></span> can hide from the OS it lives in</li>
+                        <li>Check startup programs, <span class="tooltip">scheduled tasks<span class="tooltiptext">Automated programs set to run at specific times — common persistence mechanism for malware</span></span>, and browser extensions for anything suspicious</li>
+                        <li>If you know or strongly suspect you have malware, the only reliable remediation is a full wipe and clean OS reinstall — disconnect from the internet entirely before doing anything, then boot from a trusted offline USB installer, delete all existing partitions during setup (do not simply format the system partition — delete them all and let the installer create new ones from scratch), then reinstall Windows while the network cable is unplugged; only reconnect after the OS is fully installed and updated; do not attempt to "clean" the infection and continue — a compromised system cannot be trusted, and every minute it runs is another opportunity to collect passwords, keystrokes, files, and credentials</li>
+                        <li>If it is a rare <span class="tooltip">firmware/BIOS/UEFI rootkit<span class="tooltiptext">An infection embedded in the motherboard firmware itself — survives OS reinstalls and drive replacements because it lives below the OS level entirely</span></span> (very uncommon on consumer hardware but possible), even the above may not suffice — you might need to reflash the firmware using vendor tools or, worst case, replace hardware
+                            <div style="margin-top:0.6rem; margin-left:1.2rem; line-height:1.8;">
+                                <div style="margin-bottom:0.4rem;"><strong>The safest way to attempt a firmware reflash for a suspected UEFI rootkit:</strong></div>
+                                <div style="margin-bottom:0.3rem;">- Physically disconnect all storage drives (SSD/HDD) to prevent any OS-level reinfection during the flash process</div>
+                                <div style="margin-bottom:0.3rem;">- Boot into the BIOS/UEFI setup directly, or use the manufacturer's dedicated flash method from a USB in a pre-boot environment if supported</div>
+                                <div style="margin-bottom:0.3rem;">- Download the latest official firmware from the vendor on a separate, clean computer — verify file hashes if the vendor provides them — and prepare a bootable USB flash tool</div>
+                                <div style="margin-bottom:0.3rem;">- Perform the flash completely offline, with no network connection and no storage drives connected where possible</div>
+                                <div style="margin-bottom:0.3rem;">- After flashing, wipe or replace storage, reinstall the OS from trusted offline media as described above, and enable <span class="tooltip">Secure Boot<span class="tooltiptext">A UEFI feature that prevents the system from booting unsigned or untrusted code, blocking most bootkits</span></span>, <span class="tooltip">TPM<span class="tooltiptext">Trusted Platform Module — a hardware chip that stores cryptographic keys and integrity measurements, used to detect tampering with the boot process</span></span>, and any firmware-level protections available in your BIOS</div>
+                                <div style="margin-bottom:0.3rem;">- If normal flashing fails — for example it is blocked, reverts, or the infection persists — options narrow significantly: the only remaining path is replacing the motherboard</div>
+                            </div>
+                        </li>
+                        <li>Monitor your financial accounts for unauthorized transactions</li>
+                        <li>Consider <span class="tooltip">freezing your credit<span class="tooltiptext">Locks your credit file so no new accounts can be opened in your name without your explicit approval</span></span> if personal information was exposed</li>
+                        <li>Document everything — timestamps, suspicious activity, files accessed, what was on the device</li>
+                        <li>Notify contacts — a compromised account will often be used to attack people who trust you</li>
+                        <li>Assume all data that was accessible on the device is stolen</li>
+                        <li>Report to relevant platforms and authorities where appropriate</li>
+                    </ul>
+                </div>
+
+            </div>
+
+
+            <div class="section">
+                <h2 class="section-title" id="s-attacks">Common Cyber Attacks</h2>
+
+                                <div class="attack-grid">
+                    <div class="attack-card">
+                        <h4>Ransomware</h4>
+                        <p>Malware that encrypts a victim's files, with attackers demanding a ransom to restore access.</p>
+                    </div>
+
+                    <div class="attack-card">
+                        <h4>Phishing / Social Engineering</h4>
+                        <p>Deceptive emails or messages designed to steal sensitive data like passwords or credit card numbers.</p>
+                    </div>
+
+                    <div class="attack-card">
+                        <h4>DDoS Attacks</h4>
+                        <p>Distributed Denial of Service: Flooding a system with traffic to overwhelm resources and crash services.</p>
+                    </div>
+
+                    <div class="attack-card">
+                        <h4>Man-in-the-Middle (MitM)</h4>
+                        <p>Intercepting communication between two parties to steal information.</p>
+                    </div>
+
+                    <div class="attack-card">
+                        <h4>Insider Threats</h4>
+                        <p>Security risks originating from within the organization, such as employees or contractors.</p>
+                    </div>
+
+                    <div class="attack-card">
+                        <h4>SQL Injection</h4>
+                        <p>Injecting malicious code into a server to view or steal data from a database.</p>
+                    </div>
+
+                    <div class="attack-card">
+                        <h4>Zero-Day Exploits</h4>
+                        <p>Attacks targeting unknown software vulnerabilities before a patch is released.</p>
+                    </div>
+
+                    <div class="attack-card">
+                        <h4>Business Email Compromise (BEC)</h4>
+                        <p>Targeted phishing scams aimed at employees to authorize fraudulent bank transfers.</p>
+                    </div>
+
+                    <div class="attack-card">
+                        <h4>Credential Theft</h4>
+                        <p>Using stolen usernames and passwords to gain unauthorized access.</p>
+                    </div>
+
+                    <div class="attack-card">
+                        <h4>SIM Swapping</h4>
+                        <p>Convincing your phone carrier to transfer your number to a new SIM card to gain account access.</p>
+                    </div>
+
+                    <div class="attack-card">
+                        <h4>Keylogger</h4>
+                        <p>Software that records everything you type to steal passwords and sensitive data.</p>
+                    </div>
+
+                    <div class="attack-card">
+                        <h4>Spyware</h4>
+                        <p>Software installed to monitor device activity, location, and communications—often by someone you know.</p>
+                    </div>
+
+                    <div class="attack-card">
+                        <h4>RAT (Remote Access Trojan)</h4>
+                        <p>Malware that gives attackers full remote control of your device, allowing them to spy, steal data, or execute commands.</p>
+                    </div>
+
+                    <div class="attack-card">
+                        <h4>Cryptojacking</h4>
+                        <p>Using your device's resources to mine cryptocurrency without your permission or knowledge.</p>
+                    </div>
+
+                    <div class="attack-card">
+                        <h4>IP Grabbing</h4>
+                        <p>Capturing your IP address on peer-to-peer (P2P) platforms where users connect directly to each other (Skype calls, some games) using tools like Wireshark. Discord uses centralized servers—all traffic goes through Discord's servers, not directly between users—so IP grabbing cannot happen on Discord.</p>
+                    </div>
+                </div>
+
+                
+                <div class="trends-section">
+                    <h4>Emerging Threats</h4>
+                    <ul>
+                        <li>AI-Powered Threats: Voice cloning, <span class="tooltip">deepfakes<span class="tooltiptext">AI-generated fake audio or video that realistically impersonates real people</span></span>, and hyper-personalized phishing are being used to impersonate loved ones, enable sextortion, and make scams nearly indistinguishable from reality.</li>
+                        <li>AI-Adaptive Malware: Malware that uses AI to mutate its own code in real time, evading signature-based detection by never looking the same twice — can autonomously probe for vulnerabilities and adapt its attack path based on the target's defenses.</li>
+                        <li>Supply Chain Attacks: Compromising a trusted vendor to gain access to their customers' systems.</li>
+                        <li>Cloud-Based Attacks: Targeting misconfigured cloud storage and services to steal data.</li>
+                    </ul>
+                </div>
+            </div>
+
+        
+        </div>
+
+        <footer>
+            <p>[!] TRUST NO ONE | VERIFY EVERYTHING | ASSUME COMPROMISE [!]</p>
+            <div style="margin-top: 20px; padding: 16px 20px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.1); border-left: 2px solid rgba(255,255,255,0.3); font-size: 0.88em; color: #888888;">
+                <strong style="color: rgba(255,255,255,0.7); font-family: 'Orbitron', sans-serif; font-size: 0.85em; letter-spacing: 1px;">NOTICE: Privacy is a myth. This guide limits exposure, it does not grant invisibility. There is no switch you can flip to disappear.
+            </div>
+            <div style="margin-top: 12px; padding: 14px 20px; background: rgba(255,255,255,0.015); border: 1px solid rgba(255,255,255,0.06); border-left: 2px solid rgba(255,255,255,0.15); font-size: 0.85em; color: #777;">
+                This material is provided strictly for educational purposes. We do not encourage or condone illegal activity of any kind, and we are not responsible for how you use this information.
+  </div>
+            <div style="margin-top: 15px; font-size: 0.75em; color: rgba(255,255,255,0.2); font-family: 'Share Tech Mono', monospace; letter-spacing: 1px;">
+                © 2026. All Rights Reserved.<br>
+                Unauthorized reproduction or distribution prohibited.
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        
+ const sysMessages = [
+    '> [0x13A7]',
+    '> 0xF0E1D2C3B4',
+    '> 10110110 00001111 11001010',
+    '> 0xAA77CC33DD',
+    '> [0x0006]',
+    '> 0x9F9F',
+    '> 11100000 11100000 00011111',
+    '> 0xC0FFEE99AA',
+    '> 00000000 11111111 00000000',
+    '> // READY.'
+];
+
+const sysEl = document.getElementById('sys-message');
+let sysIndex = 0;
+let sysLoopInterval = null;
+
+function cycleSysMessage() {
+    if (!sysEl) return;
+    sysEl.style.opacity = '0';
+    setTimeout(() => {
+        sysEl.textContent = sysMessages[sysIndex];
+        sysEl.style.transition = 'opacity 0.3s ease';
+        sysEl.style.opacity = '1';
+        sysIndex++;
+    }, 150);
+}
+
+setTimeout(() => {
+    cycleSysMessage();
+    sysLoopInterval = setInterval(() => {
+        if (sysIndex >= sysMessages.length) {
+            clearInterval(sysLoopInterval);
+            return;
+        }
+        cycleSysMessage();
+    }, 350);
+}, 400);
+
+        function typeIntoInput(el, text, speed, callback) {
+            el.placeholder = '';
+            let i = 0;
+            const interval = setInterval(() => {
+                if (i < text.length) {
+                    el.placeholder += text[i];
+                    i++;
+                } else {
+                    clearInterval(interval);
+                    if (callback) callback();
+                }
+            }, speed);
+            return interval;
+        }
+
+        let loadingPercent = 0;
+        let loginReady = false;
+        let skipped = false;
+        let loadingTimers = [];
+
+        function skipToSite() {
+            if (skipped) return;
+            skipped = true;
+            // Clear all pending timers
+            loadingTimers.forEach(t => clearTimeout(t));
+            loadingTimers.forEach(t => clearInterval(t));
+            if (sysLoopInterval) clearInterval(sysLoopInterval);
+
+            const skipHint = document.getElementById('skip-hint');
+            if (skipHint) skipHint.style.display = 'none';
+
+            const screen = document.getElementById('loading-screen');
+            screen.classList.add('fade-out');
+            setTimeout(() => {
+                screen.style.display = 'none';
+                document.body.classList.remove('loading');
+            }, 600);
+
+            const text = "CYBERSECURITY 101";
+            const typingElement = document.querySelector('.typing-text');
+            let ci = 0;
+            function typeChar() {
+                if (ci < text.length) {
+                    typingElement.textContent += text.charAt(ci);
+                    ci++;
+                    setTimeout(typeChar, 80);
+                } else {
+                    setTimeout(() => { typingElement.style.borderRight = 'none'; }, 500);
+                }
+            }
+            setTimeout(typeChar, 200);
+        }
+
+        // Skip on click or keypress
+        document.getElementById('loading-screen').addEventListener('click', skipToSite);
+        document.addEventListener('keydown', function skipKey(e) {
+            if (!skipped && document.getElementById('loading-screen').style.display !== 'none') {
+                skipToSite();
+                document.removeEventListener('keydown', skipKey);
+            }
+        });
+
+        const t1 = setTimeout(() => {
+            const barInner = document.getElementById('loading-bar-inner');
+            const percentEl = document.getElementById('loading-percent');
+            const percentInterval = setInterval(() => {
+                if (skipped) { clearInterval(percentInterval); return; }
+                if (loadingPercent < 100) {
+                    loadingPercent += 1;
+                    percentEl.textContent = loadingPercent + '%';
+                    barInner.style.width = loadingPercent + '%';
+                } else {
+                    clearInterval(percentInterval);
+                    const t2 = setTimeout(() => {
+                        if (skipped) return;
+                        const statsEl = document.getElementById('loading-stats');
+                        statsEl.style.transition = 'opacity 0.4s ease';
+                        statsEl.style.opacity = '0';
+                        if (sysEl) {
+                            sysEl.style.transition = 'opacity 0.4s ease';
+                            sysEl.style.opacity = '0';
+                        }
+                        const t3 = setTimeout(() => {
+                            if (skipped) return;
+                            statsEl.style.visibility = 'hidden';
+                            statsEl.style.position = 'absolute';
+                            if (sysEl) { sysEl.style.visibility = 'hidden'; sysEl.style.position = 'absolute'; }
+                            if (sysLoopInterval) clearInterval(sysLoopInterval);
+                            document.getElementById('login-form').classList.add('visible');
+                            loginReady = true;
+                            typeIntoInput(document.querySelectorAll('.login-input')[0], 'ID_7E4A2C9D', 40, () => {
+                                if (skipped) return;
+                                typeIntoInput(document.querySelectorAll('.login-input')[1], 'ACCESS_0xD1E4_F3B2', 30, () => {
+                                    if (skipped) return;
+                                    const t4 = setTimeout(() => {
+                                        if (skipped) return;
+                                        triggerLogin();
+                                    }, 250);
+                                    loadingTimers.push(t4);
+                                });
+                            });
+                        }, 250);
+                        loadingTimers.push(t3);
+                    }, 300);
+                    loadingTimers.push(t2);
+                }
+            }, 38);
+            loadingTimers.push(percentInterval);
+        }, 400);
+        loadingTimers.push(t1);
+
+        const text = "CYBERSECURITY 101";
+        const typingElement = document.querySelector('.typing-text');
+        let charIndex = 0;
+
+        function typeCharacter() {
+            if (charIndex < text.length) {
+                typingElement.textContent += text.charAt(charIndex);
+                charIndex++;
+                setTimeout(typeCharacter, 80);
+            } else {
+                setTimeout(() => {
+                    typingElement.style.borderRight = 'none';
+                }, 500);
+            }
+        }
+
+        function triggerLogin() {
+            if (!loginReady || skipped) return;
+            const skipHint = document.getElementById('skip-hint');
+            if (skipHint) skipHint.style.display = 'none';
+            const btn = document.getElementById('login-btn');
+            btn.textContent = '> ACCESSING...';
+            btn.style.pointerEvents = 'none';
+            setTimeout(() => {
+                if (skipped) return;
+                const screen = document.getElementById('loading-screen');
+                screen.classList.add('fade-out');
+                setTimeout(() => {
+                    screen.style.display = 'none';
+                    document.body.classList.remove('loading');
+                }, 800);
+                setTimeout(typeCharacter, 300);
+            }, 200);
+        }
+
+        document.getElementById('login-btn').addEventListener('click', triggerLogin);
+
+        
+        const scrollToTopBtn = document.getElementById('scroll-to-top');
+
+        window.addEventListener('scroll', () => {
+            if (window.pageYOffset > 500) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        });
+
+        scrollToTopBtn.addEventListener('click', () => {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        });
+
+        
+        const emergencyBtn = document.getElementById('emergency-access');
+        emergencyBtn.addEventListener('click', () => {
+            const incidentSection = document.getElementById('incident-response');
+            incidentSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        });
+
+        // Background music
+        const bgMusic = document.getElementById('bg-music');
+        const musicBtn = document.getElementById('music-toggle');
+        bgMusic.volume = 0.3;
+
+        musicBtn.addEventListener('click', () => {
+            if (bgMusic.paused) {
+                bgMusic.play();
+                musicBtn.classList.add('playing');
+            } else {
+                bgMusic.pause();
+                musicBtn.classList.remove('playing');
+            }
+        });
+
+        // Show music button after loading screen
+        const musicShowObserver = new MutationObserver(() => {
+            if (!document.body.classList.contains('loading')) {
+                musicBtn.classList.add('visible');
+                musicShowObserver.disconnect();
+            }
+        });
+        musicShowObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+        // TOC Sidebar
+        const tocToggle = document.getElementById('toc-toggle');
+        const tocSidebar = document.getElementById('toc-sidebar');
+        const tocOverlay = document.getElementById('toc-overlay');
+        const tocLinks = document.querySelectorAll('.toc-link');
+        const tocParents = document.querySelectorAll('.toc-parent');
+        const tocSections = document.querySelectorAll('.toc-section');
+        const allTargetIds = Array.from(tocLinks).map(l => l.dataset.target).filter(Boolean);
+
+        function openToc() {
+            tocSidebar.classList.add('open');
+            tocOverlay.classList.add('visible');
+        }
+        function closeToc() {
+            tocSidebar.classList.remove('open');
+            tocOverlay.classList.remove('visible');
+        }
+
+        tocToggle.addEventListener('click', () => {
+            tocSidebar.classList.contains('open') ? closeToc() : openToc();
+        });
+        tocOverlay.addEventListener('click', closeToc);
+
+        // Parent click: toggle expand, also scroll to section
+        tocParents.forEach(parent => {
+            parent.addEventListener('click', (e) => {
+                const section = parent.closest('.toc-section');
+                const wasExpanded = section.classList.contains('expanded');
+
+                // Collapse all others
+                tocSections.forEach(s => s.classList.remove('expanded'));
+
+                // Toggle this one
+                if (!wasExpanded) {
+                    section.classList.add('expanded');
+                }
+
+                // Scroll to the section
+                const targetId = parent.dataset.target;
+                const el = document.getElementById(targetId);
+                if (!el) return;
+
+                const isAdv = targetId.startsWith('s-adv-');
+                if (isAdv && advContent && !advContent.classList.contains('advanced-expanded')) {
+                    advContent.classList.remove('advanced-collapsed');
+                    advContent.classList.add('advanced-expanded');
+                    advToggle.classList.add('opened');
+                    setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
+                } else {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+            });
+        });
+
+        // Child click: scroll to subsection and close sidebar
+        document.querySelectorAll('.toc-child').forEach(child => {
+            child.addEventListener('click', () => {
+                const targetId = child.dataset.target;
+                const el = document.getElementById(targetId);
+                if (!el) return;
+
+                const isAdv = targetId.startsWith('ss-adv-');
+                if (isAdv && advContent && !advContent.classList.contains('advanced-expanded')) {
+                    advContent.classList.remove('advanced-collapsed');
+                    advContent.classList.add('advanced-expanded');
+                    advToggle.classList.add('opened');
+                    setTimeout(() => el.scrollIntoView({ behavior: 'smooth', block: 'start' }), 150);
+                } else {
+                    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }
+                closeToc();
+            });
+        });
+
+        // Show toggle after loading screen
+        const tocShowObserver = new MutationObserver(() => {
+            if (!document.body.classList.contains('loading')) {
+                tocToggle.classList.add('visible');
+                tocShowObserver.disconnect();
+            }
+        });
+        tocShowObserver.observe(document.body, { attributes: true, attributeFilter: ['class'] });
+
+        // Active section tracking
+        let tocRaf;
+        window.addEventListener('scroll', () => {
+            if (tocRaf) cancelAnimationFrame(tocRaf);
+            tocRaf = requestAnimationFrame(() => {
+                if (window.pageYOffset > 300) {
+                    tocToggle.classList.add('visible');
+                }
+
+                let currentId = '';
+                for (let i = allTargetIds.length - 1; i >= 0; i--) {
+                    const sec = document.getElementById(allTargetIds[i]);
+                    if (sec && sec.getBoundingClientRect().top <= 120) {
+                        currentId = allTargetIds[i];
+                        break;
+                    }
+                }
+                tocLinks.forEach(l => {
+                    l.classList.toggle('active', l.dataset.target === currentId);
+                });
+            });
+        });
+
+        // Advanced section toggle
+        const advToggle = document.getElementById('advanced-toggle');
+        const advContent = document.getElementById('advanced-content');
+        advToggle.addEventListener('click', () => {
+            const isOpen = advContent.classList.contains('advanced-expanded');
+            if (isOpen) {
+                advContent.classList.remove('advanced-expanded');
+                advContent.classList.add('advanced-collapsed');
+                advToggle.classList.remove('opened');
+            } else {
+                advContent.classList.remove('advanced-collapsed');
+                advContent.classList.add('advanced-expanded');
+                advToggle.classList.add('opened');
+            }
+        });
+
+        document.querySelectorAll('.tooltip').forEach(tip => {
+            const box = tip.querySelector('.tooltiptext');
+            if (!box) return;
+            tip.addEventListener('mouseenter', () => {
+                const r   = tip.getBoundingClientRect();
+                const bw  = 250;
+                const bh  = box.offsetHeight || 80;
+                let left  = r.left + r.width / 2 - bw / 2;
+                let top   = r.top - bh - 14;
+                if (left < 8) left = 8;
+                if (left + bw > window.innerWidth - 8) left = window.innerWidth - bw - 8;
+                if (top < 8) top = r.bottom + 14;
+                box.style.left = left + 'px';
+                box.style.top  = top  + 'px';
+            });
+        });
+
+    </script>
+
+</body>
+</html>
